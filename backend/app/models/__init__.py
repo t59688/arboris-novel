@@ -1,3 +1,4 @@
+# AIMETA P=模型包初始化_导出所有模型类|R=包标识_模型导出|NR=不含模型实现|E=-|X=internal|A=-|D=none|S=none|RD=./README.ai
 """集中导出 ORM 模型，确保 SQLAlchemy 元数据在初始化时被正确加载。"""
 
 from .admin_setting import AdminSetting

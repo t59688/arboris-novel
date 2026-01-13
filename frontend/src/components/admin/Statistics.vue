@@ -1,3 +1,4 @@
+<!-- AIMETA P=统计面板_系统使用统计|R=统计图表|NR=不含数据修改|E=component:Statistics|X=ui|A=统计组件|D=vue,chart.js|S=dom,net|RD=./README.ai -->
 <template>
   <n-card :bordered="false" class="admin-card">
     <template #header>

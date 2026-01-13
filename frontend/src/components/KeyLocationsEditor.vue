@@ -1,3 +1,4 @@
+<!-- AIMETA P=关键地点编辑_地点信息编辑|R=地点CRUD|NR=不含角色编辑|E=component:KeyLocationsEditor|X=internal|A=编辑器|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-4 max-h-96 overflow-y-auto p-1">
     <div v-for="(location, index) in localLocations" :key="index" class="p-4 border border-gray-200 rounded-lg bg-gray-50 relative">

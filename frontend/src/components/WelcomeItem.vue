@@ -1,3 +1,4 @@
+<!-- AIMETA P=欢迎项_欢迎页子项|R=欢迎项展示|NR=不含业务功能|E=component:WelcomeItem|X=internal|A=子项组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="item">
     <i>

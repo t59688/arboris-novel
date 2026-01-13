@@ -1,3 +1,4 @@
+<!-- AIMETA P=聊天气泡_对话消息展示|R=消息气泡|NR=不含输入功能|E=component:ChatBubble|X=internal|A=气泡组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div :class="wrapperClass">
     <div :class="bubbleClass">

@@ -1,3 +1,4 @@
+// AIMETA P=小说API客户端_小说和章节接口|R=小说CRUD_章节管理_生成|NR=不含UI逻辑|E=api:novel|X=internal|A=novelApi对象|D=axios|S=net|RD=./README.ai
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 
@@ -87,6 +88,12 @@ export interface ChapterOutline {
   chapter_number: number
   title: string
   summary: string
+  narrative_phase?: string
+  foreshadowing?: {
+    plant?: string[]
+    payoff?: string[]
+  }
+  emotion_hook?: string
 }
 
 export interface ChapterVersion {
@@ -141,7 +148,14 @@ export interface DeleteNovelsResponse {
   message: string
 }
 
+// 内容型Section（对应后端NovelSectionType枚举）
 export type NovelSectionType = 'overview' | 'world_setting' | 'characters' | 'relationships' | 'chapter_outline' | 'chapters'
+
+// 分析型Section（不属于NovelSectionType，使用独立的analytics API）
+export type AnalysisSectionType = 'emotion_curve' | 'foreshadowing'
+
+// 所有Section的联合类型
+export type AllSectionType = NovelSectionType | AnalysisSectionType
 
 export interface NovelSectionResponse {
   section: NovelSectionType
@@ -304,6 +318,65 @@ export class NovelAPI {
         chapter_number: chapterNumber,
         content: content
       })
+    })
+  }
+}
+
+
+// 优化相关类型定义
+export interface EmotionBeat {
+  primary_emotion: string
+  intensity: number
+  curve: {
+    start: number
+    peak: number
+    end: number
+  }
+  turning_point: string
+}
+
+export interface OptimizeRequest {
+  project_id: string
+  chapter_number: number
+  dimension: 'dialogue' | 'environment' | 'psychology' | 'rhythm'
+  additional_notes?: string
+}
+
+export interface OptimizeResponse {
+  optimized_content: string
+  optimization_notes: string
+  dimension: string
+}
+
+// 优化API
+const OPTIMIZER_BASE = `${API_BASE_URL}${API_PREFIX}/optimizer`
+
+export class OptimizerAPI {
+  /**
+   * 对章节内容进行分层优化
+   */
+  static async optimizeChapter(optimizeReq: OptimizeRequest): Promise<OptimizeResponse> {
+    return request(`${OPTIMIZER_BASE}/optimize`, {
+      method: 'POST',
+      body: JSON.stringify(optimizeReq)
+    })
+  }
+
+  /**
+   * 应用优化后的内容到章节
+   */
+  static async applyOptimization(
+    projectId: string,
+    chapterNumber: number,
+    optimizedContent: string
+  ): Promise<{ status: string; message: string }> {
+    const params = new URLSearchParams({
+      project_id: projectId,
+      chapter_number: chapterNumber.toString(),
+      optimized_content: optimizedContent
+    })
+    return request(`${OPTIMIZER_BASE}/apply-optimization?${params}`, {
+      method: 'POST'
     })
   }
 }

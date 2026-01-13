@@ -1,3 +1,4 @@
+<!-- AIMETA P=工具图标_工具链接图标|R=SVG图标|NR=不含业务逻辑|E=component:IconTooling|X=internal|A=图标|D=vue|S=dom|RD=./README.ai -->
 <!-- This icon is from <https://github.com/Templarian/MaterialDesign>, distributed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0) license-->
 <template>
   <svg

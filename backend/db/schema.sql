@@ -81,6 +81,9 @@ CREATE TABLE IF NOT EXISTS chapter_outlines (
     chapter_number INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     summary TEXT NULL,
+    narrative_phase VARCHAR(64) NULL,
+    foreshadowing JSON NULL,
+    emotion_hook TEXT NULL,
     CONSTRAINT fk_outlines_project FOREIGN KEY (project_id) REFERENCES novel_projects(id) ON DELETE CASCADE,
     UNIQUE KEY uq_outline_project_chapter (project_id, chapter_number)
 );

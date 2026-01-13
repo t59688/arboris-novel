@@ -1,3 +1,4 @@
+<!-- AIMETA P=角色编辑器_角色信息编辑|R=角色CRUD|NR=不含关系编辑|E=component:CharactersEditor|X=internal|A=编辑器|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-4 max-h-96 overflow-y-auto p-1">
     <div v-for="(character, index) in localCharacters" :key="index" class="p-4 border border-gray-200 rounded-lg bg-gray-50 relative">

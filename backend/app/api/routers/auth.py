@@ -1,3 +1,4 @@
+# AIMETA P=认证API_登录注册和令牌管理|R=用户认证_令牌生成|NR=不含用户管理|E=route:POST_/api/auth/*|X=http|A=登录_注册_令牌|D=fastapi,jose|S=db|RD=./README.ai
 import logging
 from datetime import timedelta
 from typing import Optional

@@ -1,3 +1,4 @@
+# AIMETA P=使用指标模型_API调用统计|R=使用指标表|NR=不含统计逻辑|E=UsageMetric|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 

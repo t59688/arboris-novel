@@ -1,3 +1,4 @@
+# AIMETA P=用户服务_用户管理业务逻辑|R=用户CRUD_权限|NR=不含认证逻辑|E=UserService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Optional
 
 from sqlalchemy.exc import IntegrityError

@@ -1,3 +1,4 @@
+<!-- AIMETA P=灵感加载_加载动画组件|R=加载动画|NR=不含业务逻辑|E=component:InspirationLoading|X=internal|A=加载组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="absolute inset-0 bg-white flex flex-col items-center justify-center text-center p-8 transition-opacity duration-500">
     <div class="relative mb-8">

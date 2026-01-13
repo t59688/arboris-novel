@@ -1,3 +1,4 @@
+// AIMETA P=认证状态_用户登录状态管理|R=token_user_login_logout|NR=不含API调用|E=store:auth|X=internal|A=useAuthStore|D=pinia|S=storage|RD=./README.ai
 import { defineStore } from 'pinia';
 import { API_BASE_URL } from '@/api/novel';
 

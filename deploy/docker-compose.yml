@@ -1,6 +1,9 @@
 services:
   app:
-    image: tiechui251/arboris-app:latest
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: arboris-app:local
     container_name: arboris-app
     ports:
       - "${APP_PORT:-80}:80"

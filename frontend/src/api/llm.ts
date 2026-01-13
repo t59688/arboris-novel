@@ -1,3 +1,4 @@
+// AIMETA P=LLM_API客户端_模型配置接口|R=LLM配置CRUD|NR=不含UI逻辑|E=api:llm|X=internal|A=llmApi对象|D=axios|S=net|RD=./README.ai
 import { useAuthStore } from '@/stores/auth';
 
 const API_PREFIX = '/api';

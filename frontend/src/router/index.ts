@@ -1,3 +1,4 @@
+// AIMETA P=路由配置_所有页面路由定义|R=路由表_导航守卫_权限控制|NR=不含组件实现|E=router:index|X=internal|A=router实例|D=vue-router|S=none|RD=./README.ai
 import { createRouter, createWebHistory } from 'vue-router'
 import WorkspaceEntry from '../views/WorkspaceEntry.vue'
 import NovelWorkspace from '../views/NovelWorkspace.vue'

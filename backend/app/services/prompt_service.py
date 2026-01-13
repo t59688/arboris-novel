@@ -1,3 +1,4 @@
+# AIMETA P=提示词服务_提示模板管理|R=提示词加载_缓存|NR=不含内容生成|E=PromptService|X=internal|A=服务类|D=sqlalchemy|S=db,fs|RD=./README.ai
 import asyncio
 from typing import Dict, Optional
 

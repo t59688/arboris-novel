@@ -1,3 +1,4 @@
+# AIMETA P=管理员设置服务_设置业务逻辑|R=设置读写_验证|NR=不含数据访问|E=AdminSettingService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession

@@ -1,0 +1,2 @@
+AIDIR PATH=frontend/src/router|ROLE=路由配置_Vue_Router定义|BOUND=不含组件实现_仅路由映射|ENTRY=index.ts|EXPOSE=internal|FIND=路由定义:index.ts
+AILIST NAME=index.ts|K=file|P=路由配置_所有页面路由定义|E=router:index|A=路由表_导航守卫_权限控制

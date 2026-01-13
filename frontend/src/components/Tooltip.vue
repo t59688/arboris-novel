@@ -1,3 +1,4 @@
+<!-- AIMETA P=工具提示_悬浮提示组件|R=提示信息|NR=不含业务逻辑|E=component:Tooltip|X=internal|A=提示组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div ref="triggerRef" class="inline-block" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <slot></slot>

@@ -1,0 +1,4 @@
+AIDIR PATH=backend/app/tasks|ROLE=异步任务_Celery后台任务定义|BOUND=不含同步业务逻辑_不含API处理|ENTRY=NO_ENTRY|EXPOSE=job|FIND=情感任务:emotion_tasks.py_伏笔任务:foreshadowing_tasks.py
+AILIST NAME=__init__.py|K=file|P=任务包初始化_导出所有任务|E=-|A=-
+AILIST NAME=emotion_tasks.py|K=file|P=情感分析任务_异步情感曲线计算|E=celery_task:analyze_emotion|A=异步情感分析_缓存更新
+AILIST NAME=foreshadowing_tasks.py|K=file|P=伏笔分析任务_异步伏笔检测|E=celery_task:analyze_foreshadowing|A=异步伏笔分析_提醒生成

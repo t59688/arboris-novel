@@ -1,0 +1,3 @@
+AIDIR PATH=backend/app/config|ROLE=配置模块_Celery异步任务配置|BOUND=不含业务逻辑_不含数据库配置|ENTRY=celery_config.py|EXPOSE=internal|FIND=Celery配置:celery_config.py
+AILIST NAME=__init__.py|K=file|P=配置包初始化_导出配置对象|E=-|A=-
+AILIST NAME=celery_config.py|K=file|P=Celery配置_异步任务队列设置|E=celery_app|A=Redis连接_任务路由_序列化配置

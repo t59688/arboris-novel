@@ -1,3 +1,4 @@
+<!-- AIMETA P=灵感模式_AI对话创作|R=对话创作界面|NR=不含写作台功能|E=route:/inspiration#component:InspirationMode|X=ui|A=对话界面|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="flex items-center justify-center min-h-screen p-4">
     <div class="w-full max-w-6xl mx-auto">

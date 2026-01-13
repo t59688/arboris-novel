@@ -1,3 +1,4 @@
+// AIMETA P=管理员API客户端_管理接口调用|R=用户管理_系统配置_统计|NR=不含UI逻辑|E=api:admin|X=internal|A=adminApi对象|D=axios|S=net|RD=./README.ai
 import { useAuthStore } from '@/stores/auth'
 import router from '@/router'
 import type { NovelSectionResponse, NovelSectionType } from '@/api/novel'

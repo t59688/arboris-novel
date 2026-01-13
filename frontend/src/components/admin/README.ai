@@ -1,0 +1,8 @@
+AIDIR PATH=frontend/src/components/admin|ROLE=管理员组件_后台管理界面组件|BOUND=不含普通用户功能_仅管理员可见|ENTRY=NO_ENTRY|EXPOSE=ui|FIND=用户管理:UserManagement.vue_小说管理:NovelManagement.vue_设置:SettingsManagement.vue
+AILIST NAME=NovelManagement.vue|K=file|P=小说管理_管理员小说列表管理|E=component:NovelManagement|A=小说列表_删除_统计
+AILIST NAME=PasswordManagement.vue|K=file|P=密码管理_管理员密码修改|E=component:PasswordManagement|A=密码修改表单
+AILIST NAME=PromptManagement.vue|K=file|P=提示词管理_AI提示模板管理|E=component:PromptManagement|A=提示词CRUD
+AILIST NAME=SettingsManagement.vue|K=file|P=设置管理_系统设置界面|E=component:SettingsManagement|A=系统配置表单
+AILIST NAME=Statistics.vue|K=file|P=统计面板_系统使用统计|E=component:Statistics|A=统计图表
+AILIST NAME=UpdateLogManagement.vue|K=file|P=更新日志管理_系统更新记录|E=component:UpdateLogManagement|A=日志CRUD
+AILIST NAME=UserManagement.vue|K=file|P=用户管理_用户列表管理|E=component:UserManagement|A=用户CRUD_权限

@@ -1,0 +1,11 @@
+AIDIR PATH=backend/app/repositories|ROLE=数据仓库_数据访问层_CRUD操作封装|BOUND=不含业务逻辑_不含API处理|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=小说:novel_repository.py_用户:user_repository.py
+AILIST NAME=__init__.py|K=file|P=仓库包初始化_导出所有仓库类|E=-|A=-
+AILIST NAME=base.py|K=file|P=仓库基类_通用CRUD方法|E=BaseRepository|A=create_get_update_delete
+AILIST NAME=admin_setting_repository.py|K=file|P=管理员设置仓库_设置数据访问|E=AdminSettingRepository|A=设置CRUD
+AILIST NAME=llm_config_repository.py|K=file|P=LLM配置仓库_配置数据访问|E=LLMConfigRepository|A=配置CRUD
+AILIST NAME=novel_repository.py|K=file|P=小说仓库_小说和章节数据访问|E=NovelRepository|A=小说CRUD_章节CRUD
+AILIST NAME=prompt_repository.py|K=file|P=提示词仓库_提示模板数据访问|E=PromptRepository|A=提示词CRUD
+AILIST NAME=system_config_repository.py|K=file|P=系统配置仓库_配置数据访问|E=SystemConfigRepository|A=配置CRUD
+AILIST NAME=update_log_repository.py|K=file|P=更新日志仓库_日志数据访问|E=UpdateLogRepository|A=日志CRUD
+AILIST NAME=usage_metric_repository.py|K=file|P=使用指标仓库_指标数据访问|E=UsageMetricRepository|A=指标CRUD
+AILIST NAME=user_repository.py|K=file|P=用户仓库_用户数据访问|E=UserRepository|A=用户CRUD_认证查询

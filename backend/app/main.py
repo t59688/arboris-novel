@@ -1,3 +1,4 @@
+# AIMETA P=FastAPI应用入口_装配路由依赖和生命周期管理|R=应用启动_路由注册_中间件配置|NR=不含业务逻辑实现|E=uvicorn_app.main:app|X=http|A=FastAPI_app实例|D=fastapi,uvicorn|S=net,db|RD=./README.ai
 """FastAPI 应用入口，负责装配路由、依赖与生命周期管理。"""
 
 import logging

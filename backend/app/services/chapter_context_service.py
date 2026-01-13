@@ -1,3 +1,4 @@
+# AIMETA P=章节上下文服务_章节关联信息|R=上下文获取_关联分析|NR=不含内容生成|E=ChapterContextService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from __future__ import annotations
 
 """

@@ -1,3 +1,4 @@
+# AIMETA P=向量存储服务_文本向量化|R=向量存储_相似搜索|NR=不含业务逻辑|E=VectorStoreService|X=internal|A=服务类|D=chromadb|S=db,fs|RD=./README.ai
 from __future__ import annotations
 
 """

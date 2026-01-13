@@ -1,3 +1,4 @@
+# AIMETA P=LLM配置服务_模型配置业务逻辑|R=配置管理_模型选择|NR=不含模型调用|E=LLMConfigService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession

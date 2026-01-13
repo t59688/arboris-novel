@@ -1,3 +1,4 @@
+<!-- AIMETA P=章节工作区_章节编辑界面|R=章节编辑|NR=不含列表功能|E=component:ChapterWorkspace|X=internal|A=工作区|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="bg-white rounded-lg shadow-sm p-6">
     <!-- 章节头部 -->

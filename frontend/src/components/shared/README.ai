@@ -1,0 +1,2 @@
+AIDIR PATH=frontend/src/components/shared|ROLE=共享组件_跨页面复用组件|BOUND=不含页面特定逻辑_通用组件|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=详情壳:NovelDetailShell.vue
+AILIST NAME=NovelDetailShell.vue|K=file|P=小说详情壳_详情页布局容器|E=component:NovelDetailShell|A=详情页布局_导航

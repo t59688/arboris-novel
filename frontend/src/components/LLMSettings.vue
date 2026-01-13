@@ -1,3 +1,4 @@
+<!-- AIMETA P=LLM设置_模型配置界面|R=LLM配置表单|NR=不含模型调用|E=component:LLMSettings|X=internal|A=设置组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="bg-white/70 backdrop-blur-xl rounded-2xl shadow-lg p-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">LLM 配置</h2>

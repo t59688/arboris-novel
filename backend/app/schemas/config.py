@@ -1,3 +1,4 @@
+# AIMETA P=配置模式_系统配置请求响应结构|R=配置读写结构|NR=不含业务逻辑|E=ConfigSchema|X=internal|A=Pydantic模式|D=pydantic|S=none|RD=./README.ai
 from typing import Optional
 
 from pydantic import BaseModel, Field

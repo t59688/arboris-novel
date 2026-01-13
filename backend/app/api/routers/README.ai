@@ -1,0 +1,12 @@
+AIDIR PATH=backend/app/api/routers|ROLE=API路由定义_所有HTTP端点实现|BOUND=不含业务逻辑_只负责请求解析和响应封装|ENTRY=__init__.py|EXPOSE=http|FIND=小说API:novels.py_写作API:writer.py_分析API:analytics.py
+AILIST NAME=__init__.py|K=file|P=路由聚合_注册所有子路由到主路由|E=ENTRYPOINT|A=api_router聚合所有路由
+AILIST NAME=admin.py|K=file|P=管理员API_用户管理和系统配置|E=route:POST_GET_/api/admin/*|A=用户CRUD_系统配置_统计
+AILIST NAME=analytics.py|K=file|P=分析API_情感曲线和章节分析|E=route:GET_/api/analytics/*|A=情感分析_章节统计
+AILIST NAME=analytics_enhanced.py|K=file|P=增强分析API_多维情感和故事轨迹|E=route:GET_/api/analytics/enhanced/*|A=多维情感_轨迹分析_创意指导
+AILIST NAME=auth.py|K=file|P=认证API_登录注册和令牌管理|E=route:POST_/api/auth/*|A=登录_注册_令牌刷新
+AILIST NAME=foreshadowing.py|K=file|P=伏笔API_伏笔管理和回收追踪|E=route:GET_POST_/api/foreshadowing/*|A=伏笔CRUD_回收追踪
+AILIST NAME=llm_config.py|K=file|P=LLM配置API_模型配置管理|E=route:GET_POST_/api/llm-config/*|A=LLM配置CRUD
+AILIST NAME=novels.py|K=file|P=小说API_项目和章节管理|E=route:GET_POST_/api/novels/*|A=小说CRUD_章节管理
+AILIST NAME=optimizer.py|K=file|P=优化器API_内容优化建议|E=route:POST_/api/optimizer/*|A=内容优化_建议生成
+AILIST NAME=updates.py|K=file|P=更新日志API_系统更新记录|E=route:GET_/api/updates/*|A=更新日志查询
+AILIST NAME=writer.py|K=file|P=写作API_章节生成和大纲创建|E=route:POST_/api/writer/*|A=章节生成_大纲生成_评审

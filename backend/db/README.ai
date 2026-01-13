@@ -1,0 +1,2 @@
+AIDIR PATH=backend/db|ROLE=数据库SQL脚本_表结构定义|BOUND=不含Python代码_不含业务逻辑|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=表结构:schema.sql
+AILIST NAME=schema.sql|K=file|P=数据库表结构_SQL建表语句|E=-|A=所有表DDL

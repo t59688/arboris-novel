@@ -1,0 +1,12 @@
+AIDIR PATH=backend/app/models|ROLE=ORM模型_SQLAlchemy表定义|BOUND=不含业务逻辑_不含数据访问方法|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=小说:novel.py_用户:user.py_伏笔:foreshadowing.py
+AILIST NAME=__init__.py|K=file|P=模型包初始化_导出所有模型类|E=-|A=-
+AILIST NAME=admin_setting.py|K=file|P=管理员设置模型_系统配置存储|E=AdminSetting|A=键值对配置表
+AILIST NAME=foreshadowing.py|K=file|P=伏笔模型_伏笔和回收追踪|E=Foreshadowing_ForeshadowingResolution|A=伏笔表_回收表_提醒表_分析表
+AILIST NAME=llm_config.py|K=file|P=LLM配置模型_模型配置存储|E=LLMConfig|A=LLM配置表
+AILIST NAME=novel.py|K=file|P=小说模型_项目和章节定义|E=Novel_Chapter_ChapterVersion|A=小说表_章节表_版本表
+AILIST NAME=prompt.py|K=file|P=提示词模型_AI提示模板存储|E=Prompt|A=提示词表
+AILIST NAME=system_config.py|K=file|P=系统配置模型_全局配置存储|E=SystemConfig|A=系统配置表
+AILIST NAME=update_log.py|K=file|P=更新日志模型_系统更新记录|E=UpdateLog|A=更新日志表
+AILIST NAME=usage_metric.py|K=file|P=使用指标模型_API调用统计|E=UsageMetric|A=使用指标表
+AILIST NAME=user.py|K=file|P=用户模型_用户账户定义|E=User|A=用户表
+AILIST NAME=user_daily_request.py|K=file|P=用户日请求模型_每日请求限制|E=UserDailyRequest|A=日请求统计表

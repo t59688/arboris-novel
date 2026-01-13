@@ -1,3 +1,4 @@
+# AIMETA P=提示词仓库_提示模板数据访问|R=提示词CRUD|NR=不含业务逻辑|E=PromptRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Iterable, Optional
 
 from sqlalchemy import select

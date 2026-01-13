@@ -1,3 +1,4 @@
+<!-- AIMETA P=写作台侧边栏_章节目录|R=章节列表_导航|NR=不含内容编辑|E=component:WDSidebar|X=ui|A=侧边栏|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div>
     <!-- 侧边栏遮罩 (移动端) -->

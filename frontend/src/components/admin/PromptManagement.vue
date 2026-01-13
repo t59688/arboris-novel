@@ -1,3 +1,4 @@
+<!-- AIMETA P=提示词管理_AI提示模板管理|R=提示词CRUD|NR=不含模型调用|E=component:PromptManagement|X=ui|A=管理组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-card :bordered="false" class="admin-card">
     <template #header>

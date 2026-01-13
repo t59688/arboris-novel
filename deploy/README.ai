@@ -1,0 +1,5 @@
+AIDIR PATH=deploy|ROLE=部署配置文件_Docker和Nginx配置|BOUND=不含源代码_仅部署配置|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=Docker配置_Nginx配置
+AILIST NAME=docker-compose.yml|K=file|P=Docker编排_多容器部署配置|E=-|A=服务编排_网络_卷
+AILIST NAME=Dockerfile.backend|K=file|P=后端Dockerfile_后端镜像构建|E=-|A=Python环境_依赖安装
+AILIST NAME=Dockerfile.frontend|K=file|P=前端Dockerfile_前端镜像构建|E=-|A=Node构建_Nginx服务
+AILIST NAME=nginx.conf|K=file|P=Nginx配置_反向代理配置|E=-|A=代理规则_静态文件

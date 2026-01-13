@@ -1,3 +1,4 @@
+# AIMETA P=更新日志模型_系统更新记录|R=更新日志表|NR=不含日志逻辑|E=UpdateLog|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, String, Text, func

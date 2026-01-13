@@ -1,3 +1,4 @@
+# AIMETA P=系统配置模型_全局配置存储|R=系统配置表|NR=不含配置逻辑|E=SystemConfig|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 

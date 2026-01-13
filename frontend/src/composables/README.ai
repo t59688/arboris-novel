@@ -1,0 +1,2 @@
+AIDIR PATH=frontend/src/composables|ROLE=组合式函数_Vue3_Composition_API复用逻辑|BOUND=不含UI组件_仅逻辑复用|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=提示:useAlert.ts
+AILIST NAME=useAlert.ts|K=file|P=提示组合函数_全局提示消息管理|E=compose:useAlert|A=showAlert_hideAlert

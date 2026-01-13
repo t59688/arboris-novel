@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# AIMETA P=LLM工具_大模型调用辅助|R=请求构建_响应解析|NR=不含业务逻辑|E=LLMTool|X=internal|A=工具类|D=httpx|S=net|RD=./README.ai
 """OpenAI 兼容型 LLM 工具封装，保持与旧项目一致的接口体验。"""
 
 import os

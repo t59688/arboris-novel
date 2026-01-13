@@ -1,0 +1,7 @@
+AIDIR PATH=frontend/src/components/writing-desk/workspace|ROLE=工作区子组件_章节编辑状态组件|BOUND=不含弹窗_仅工作区内部组件|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=章节内容:ChapterContent.vue_版本选择:VersionSelector.vue
+AILIST NAME=ChapterContent.vue|K=file|P=章节内容_章节文本展示编辑|E=component:ChapterContent|A=内容展示_编辑
+AILIST NAME=ChapterEmpty.vue|K=file|P=空章节_未选择章节状态|E=component:ChapterEmpty|A=空状态提示
+AILIST NAME=ChapterFailed.vue|K=file|P=生成失败_生成错误状态|E=component:ChapterFailed|A=错误提示_重试
+AILIST NAME=ChapterGenerating.vue|K=file|P=生成中_章节生成进度|E=component:ChapterGenerating|A=进度展示_流式输出
+AILIST NAME=VersionSelector.vue|K=file|P=版本选择器_章节版本切换|E=component:VersionSelector|A=版本列表_切换
+AILIST NAME=WorkspaceInitial.vue|K=file|P=初始工作区_初始状态展示|E=component:WorkspaceInitial|A=初始引导

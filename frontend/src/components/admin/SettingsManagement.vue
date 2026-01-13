@@ -1,3 +1,4 @@
+<!-- AIMETA P=设置管理_系统设置界面|R=系统配置表单|NR=不含用户设置|E=component:SettingsManagement|X=ui|A=设置组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-space vertical size="large" class="admin-settings">
     <n-card :bordered="false">

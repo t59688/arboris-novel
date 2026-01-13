@@ -1,3 +1,4 @@
+# AIMETA P=用户日请求模型_每日请求限制|R=日请求统计表|NR=不含限制逻辑|E=UserDailyRequest|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from datetime import date
 
 from sqlalchemy import Date, ForeignKey, Integer, UniqueConstraint

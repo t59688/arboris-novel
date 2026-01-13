@@ -1,3 +1,4 @@
+# AIMETA P=LLM服务_大模型调用封装|R=API调用_流式生成|NR=不含业务逻辑|E=LLMService|X=internal|A=服务类|D=openai,httpx|S=net|RD=./README.ai
 import logging
 import os
 from typing import Any, Dict, List, Optional

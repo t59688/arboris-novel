@@ -1,3 +1,4 @@
+<!-- AIMETA P=蓝图确认_蓝图确认对话框|R=确认操作|NR=不含编辑功能|E=component:BlueprintConfirmation|X=internal|A=确认对话框|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="p-8 bg-white rounded-2xl shadow-2xl fade-in">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">信息收集完成！</h2>

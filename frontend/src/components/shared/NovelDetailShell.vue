@@ -1,94 +1,98 @@
+<!-- AIMETA P=小说详情壳_详情页布局容器|R=详情页布局_导航|NR=不含具体内容|E=component:NovelDetailShell|X=internal|A=布局组件|D=vue|S=dom|RD=./README.ai -->
 <template>
-  <div class="h-screen flex flex-col overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40">
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-lg border-b border-slate-200/60 shadow-sm">
-      <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="flex items-center justify-between">
-          <!-- Left: Title & Info -->
-          <div class="flex items-center gap-3 flex-1 min-w-0">
-            <button
-              class="lg:hidden flex-shrink-0 p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200"
-              @click="toggleSidebar"
-              aria-label="Toggle sidebar"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <div class="flex-1 min-w-0">
-              <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 truncate">
-                {{ formattedTitle }}
-              </h1>
-              <p v-if="overviewMeta.updated_at" class="text-xs sm:text-sm text-slate-500 mt-0.5">
-                最近更新：{{ overviewMeta.updated_at }}
-              </p>
-            </div>
-          </div>
+  <div class="h-screen flex flex-col overflow-hidden md-surface">
+    <!-- Material 3 Top App Bar -->
+    <header class="md-top-app-bar sticky top-0 z-40">
+      <div class="max-w-[1800px] mx-auto w-full flex items-center px-4 h-16">
+        <!-- Leading: Menu Button (Mobile) -->
+        <button
+          class="md-icon-btn lg:hidden mr-2"
+          @click="toggleSidebar"
+          aria-label="Toggle sidebar"
+        >
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
 
-          <!-- Right: Actions -->
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <button
-              class="px-3 py-2 sm:px-4 text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg transition-all duration-200 hover:shadow-md"
-              @click="goBack"
-            >
-              <span class="hidden sm:inline">返回列表</span>
-              <span class="sm:hidden">返回</span>
-            </button>
-            <button
-              v-if="!isAdmin"
-              class="px-3 py-2 sm:px-4 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-              @click="goToWritingDesk"
-            >
-              <span class="hidden sm:inline">开始创作</span>
-              <span class="sm:hidden">创作</span>
-            </button>
-          </div>
+        <!-- Title -->
+        <div class="flex-1 min-w-0">
+          <h1 class="md-title-large truncate" style="color: var(--md-on-surface);">
+            {{ formattedTitle }}
+          </h1>
+          <p v-if="overviewMeta.updated_at" class="md-body-small" style="color: var(--md-on-surface-variant);">
+            最近更新：{{ formatDateTime(overviewMeta.updated_at) }}
+          </p>
+        </div>
+
+        <!-- Trailing: Actions -->
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button
+            class="md-btn md-btn-outlined md-ripple"
+            @click="goBack"
+          >
+            <svg class="w-5 h-5 hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span class="hidden sm:inline">返回列表</span>
+            <span class="sm:hidden">返回</span>
+          </button>
+          <button
+            v-if="!isAdmin"
+            class="md-btn md-btn-filled md-ripple"
+            @click="goToWritingDesk"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            <span class="hidden sm:inline">开始创作</span>
+            <span class="sm:hidden">创作</span>
+          </button>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
     <div class="flex max-w-[1800px] mx-auto w-full flex-1 min-h-0 overflow-hidden">
-      <!-- Sidebar -->
+      <!-- Material 3 Navigation Drawer -->
       <aside
-        class="fixed left-0 top-[73px] bottom-0 z-30 w-72 bg-white/95 backdrop-blur-lg border-r border-slate-200/60 shadow-2xl transform transition-transform duration-300 ease-out lg:translate-x-0"
+        class="fixed left-0 top-16 bottom-0 z-30 w-80 md-surface transform transition-transform duration-300 lg:translate-x-0"
         :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+        style="border-right: 1px solid var(--md-outline-variant);"
       >
-        <!-- Sidebar Header -->
-        <div class="hidden lg:flex items-center justify-between px-6 py-5 border-b border-slate-200/60">
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-            <span class="text-sm font-semibold text-slate-700 uppercase tracking-wide">
-              {{ isAdmin ? '内容视图' : '蓝图导航' }}
-            </span>
+        <!-- Drawer Header -->
+        <div class="flex items-center gap-3 px-6 py-4" style="border-bottom: 1px solid var(--md-outline-variant);">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: var(--md-primary-container);">
+            <svg class="w-5 h-5" style="color: var(--md-on-primary-container);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
           </div>
+          <span class="md-title-medium" style="color: var(--md-on-surface);">
+            {{ isAdmin ? '内容视图' : '蓝图导航' }}
+          </span>
         </div>
 
-        <!-- Navigation -->
-        <nav class="px-4 py-6 space-y-1.5 overflow-y-auto h-[calc(100%-5rem)] lg:h-[calc(100%-5rem)]">
+        <!-- Navigation Items -->
+        <nav class="px-3 py-4 space-y-1 overflow-y-auto h-[calc(100%-5rem)]">
           <button
             v-for="section in sections"
             :key="section.key"
             type="button"
             @click="switchSection(section.key)"
-            :class="[
-              'w-full group flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-200',
-              activeSection === section.key
-                ? 'bg-gradient-to-r from-indigo-50 to-indigo-100/80 text-indigo-700 shadow-sm ring-1 ring-indigo-200/50'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            ]"
+            class="md-nav-drawer-item w-full md-ripple"
+            :class="{ 'active': activeSection === section.key }"
           >
             <span
-              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-200"
-              :class="activeSection === section.key
-                ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md'
-                : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'"
+              class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-all duration-200"
+              :style="activeSection === section.key
+                ? 'background-color: var(--md-primary); color: var(--md-on-primary);'
+                : 'background-color: var(--md-surface-container); color: var(--md-on-surface-variant);'"
             >
               <component :is="getSectionIcon(section.key)" class="w-5 h-5" />
             </span>
             <span class="text-left flex-1">
-              <span class="block font-semibold">{{ section.label }}</span>
-              <span class="text-xs font-normal opacity-70">{{ section.description }}</span>
+              <span class="block md-label-large">{{ section.label }}</span>
+              <span class="md-body-small" style="color: var(--md-on-surface-variant);">{{ section.description }}</span>
             </span>
           </button>
         </nav>
@@ -103,36 +107,38 @@
       >
         <div
           v-if="isSidebarOpen"
-          class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-20 lg:hidden"
+          class="fixed inset-0 z-20 lg:hidden"
+          style="background-color: rgba(0, 0, 0, 0.32);"
           @click="toggleSidebar"
         ></div>
       </transition>
 
       <!-- Main Content Area -->
-      <div class="flex-1 lg:ml-72 min-h-0 flex flex-col h-full">
-        <div class="flex-1 min-h-0 h-full px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 flex flex-col overflow-hidden box-border">
+      <div class="flex-1 lg:ml-80 min-h-0 flex flex-col h-full">
+        <div class="flex-1 min-h-0 h-full p-4 sm:p-6 lg:p-8 flex flex-col overflow-hidden box-border">
           <div class="flex-1 flex flex-col min-h-0 h-full">
-            <!-- Content Card -->
-            <div class="flex-1 h-full bg-white/95 backdrop-blur-sm rounded-2xl border border-slate-200/60 shadow-xl p-6 sm:p-8 lg:p-10 min-h-[20rem] transition-shadow duration-300 hover:shadow-2xl flex flex-col box-border" :class="contentCardClass">
+            <!-- Material 3 Card -->
+            <div 
+              class="md-card md-card-elevated flex-1 h-full p-6 sm:p-8 min-h-[20rem] flex flex-col box-border" 
+              :class="contentCardClass"
+              style="border-radius: var(--md-radius-lg);"
+            >
               <!-- Loading State -->
               <div v-if="isSectionLoading" class="flex flex-col items-center justify-center py-20 sm:py-28">
-                <div class="relative">
-                  <div class="w-12 h-12 border-4 border-indigo-100 rounded-full"></div>
-                  <div class="absolute top-0 left-0 w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-                <p class="mt-4 text-sm text-slate-500">加载中...</p>
+                <div class="md-spinner"></div>
+                <p class="mt-4 md-body-medium" style="color: var(--md-on-surface-variant);">加载中...</p>
               </div>
 
               <!-- Error State -->
               <div v-else-if="currentError" class="flex flex-col items-center justify-center py-20 sm:py-28 space-y-4">
-                <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center">
-                  <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background-color: var(--md-error-container);">
+                  <svg class="w-8 h-8" style="color: var(--md-error);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <p class="text-slate-600 text-center">{{ currentError }}</p>
+                <p class="md-body-large text-center" style="color: var(--md-on-surface);">{{ currentError }}</p>
                 <button
-                  class="px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+                  class="md-btn md-btn-filled md-ripple"
                   @click="reloadSection(activeSection, true)"
                 >
                   重试
@@ -165,54 +171,56 @@
       @save="handleSave"
     />
 
-    <!-- Add Chapter Modal -->
+    <!-- Material 3 Add Chapter Modal -->
     <transition
-      enter-active-class="transition-all duration-300"
-      leave-active-class="transition-all duration-300"
-      enter-from-class="opacity-0 scale-95"
-      leave-to-class="opacity-0 scale-95"
+      enter-active-class="md-scale-enter-active"
+      leave-active-class="md-scale-leave-active"
+      enter-from-class="md-scale-enter-from"
+      leave-to-class="md-scale-leave-to"
     >
-      <div v-if="isAddChapterModalOpen && !isAdmin" class="fixed inset-0 z-50 flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="cancelNewChapter"></div>
-        <div class="relative bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-8 w-full max-w-lg transform transition-all" @click.stop>
-          <h3 class="text-xl font-bold text-slate-900 mb-6">新增章节大纲</h3>
-          <div class="space-y-5">
-            <div>
-              <label for="new-chapter-title" class="block text-sm font-semibold text-slate-700 mb-2">
+      <div v-if="isAddChapterModalOpen && !isAdmin" class="md-dialog-overlay">
+        <div class="absolute inset-0" @click="cancelNewChapter"></div>
+        <div class="md-dialog relative w-full max-w-lg mx-4" @click.stop>
+          <div class="md-dialog-header">
+            <h3 class="md-dialog-title">新增章节大纲</h3>
+          </div>
+          <div class="md-dialog-content space-y-6">
+            <div class="md-text-field">
+              <label for="new-chapter-title" class="md-text-field-label">
                 章节标题
               </label>
               <input
                 id="new-chapter-title"
                 v-model="newChapterTitle"
                 type="text"
-                class="block w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+                class="md-text-field-input"
                 placeholder="例如：意外的相遇"
               >
             </div>
-            <div>
-              <label for="new-chapter-summary" class="block text-sm font-semibold text-slate-700 mb-2">
+            <div class="md-text-field">
+              <label for="new-chapter-summary" class="md-text-field-label">
                 章节摘要
               </label>
               <textarea
                 id="new-chapter-summary"
                 v-model="newChapterSummary"
                 rows="4"
-                class="block w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200 resize-none"
+                class="md-textarea w-full"
                 placeholder="简要描述本章发生的主要事件"
               ></textarea>
             </div>
           </div>
-          <div class="mt-8 flex justify-end gap-3">
+          <div class="md-dialog-actions">
             <button
               type="button"
-              class="px-5 py-2.5 text-sm font-medium text-slate-600 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg transition-all duration-200"
+              class="md-btn md-btn-text md-ripple"
               @click="cancelNewChapter"
             >
               取消
             </button>
             <button
               type="button"
-              class="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+              class="md-btn md-btn-filled md-ripple"
               @click="saveNewChapter"
             >
               保存
@@ -230,7 +238,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useNovelStore } from '@/stores/novel'
 import { NovelAPI } from '@/api/novel'
 import { AdminAPI } from '@/api/admin'
-import type { NovelProject, NovelSectionResponse, NovelSectionType } from '@/api/novel'
+import type { NovelProject, NovelSectionResponse, NovelSectionType, AllSectionType } from '@/api/novel'
+import { formatDateTime } from '@/utils/date'
 import BlueprintEditModal from '@/components/BlueprintEditModal.vue'
 import OverviewSection from '@/components/novel-detail/OverviewSection.vue'
 import WorldSettingSection from '@/components/novel-detail/WorldSettingSection.vue'
@@ -238,12 +247,14 @@ import CharactersSection from '@/components/novel-detail/CharactersSection.vue'
 import RelationshipsSection from '@/components/novel-detail/RelationshipsSection.vue'
 import ChapterOutlineSection from '@/components/novel-detail/ChapterOutlineSection.vue'
 import ChaptersSection from '@/components/novel-detail/ChaptersSection.vue'
+import EmotionCurveSection from '@/components/novel-detail/EmotionCurveSection.vue'
+import ForeshadowingSection from '@/components/novel-detail/ForeshadowingSection.vue'
 
 interface Props {
   isAdmin?: boolean
 }
 
-type SectionKey = NovelSectionType
+type SectionKey = AllSectionType
 
 const props = withDefaults(defineProps<Props>(), {
   isAdmin: false
@@ -262,7 +273,9 @@ const sections: Array<{ key: SectionKey; label: string; description: string }> =
   { key: 'characters', label: '主要角色', description: '人物性格与目标' },
   { key: 'relationships', label: '人物关系', description: '角色之间的联系' },
   { key: 'chapter_outline', label: '章节大纲', description: props.isAdmin ? '故事章节规划' : '故事结构规划' },
-  { key: 'chapters', label: '章节内容', description: props.isAdmin ? '生成章节与正文' : '生成状态与摘要' }
+  { key: 'chapters', label: '章节内容', description: props.isAdmin ? '生成章节与正文' : '生成状态与摘要' },
+  { key: 'emotion_curve', label: '情感曲线', description: '追踪章节情感变化' },
+  { key: 'foreshadowing', label: '伏笔管理', description: '故事线索与回收' }
 ]
 
 const sectionComponents: Record<SectionKey, any> = {
@@ -271,7 +284,9 @@ const sectionComponents: Record<SectionKey, any> = {
   characters: CharactersSection,
   relationships: RelationshipsSection,
   chapter_outline: ChapterOutlineSection,
-  chapters: ChaptersSection
+  chapters: ChaptersSection,
+  emotion_curve: EmotionCurveSection,
+  foreshadowing: ForeshadowingSection
 }
 
 // Section icons as functional components
@@ -307,6 +322,12 @@ const getSectionIcon = (key: SectionKey) => {
     chapters: () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 }, [
       h('path', { d: 'M4 19.5A2.5 2.5 0 016.5 17H20' }),
       h('path', { d: 'M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z' })
+    ]),
+    emotion_curve: () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 }, [
+      h('path', { d: 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z' })
+    ]),
+    foreshadowing: () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2 }, [
+      h('path', { d: 'M13 10V3L4 14h7v7l9-11h-7z' })
     ])
   }
   return icons[key]
@@ -319,7 +340,9 @@ const sectionLoading = reactive<Record<SectionKey, boolean>>({
   characters: false,
   relationships: false,
   chapter_outline: false,
-  chapters: false
+  chapters: false,
+  emotion_curve: false,
+  foreshadowing: false
 })
 const sectionError = reactive<Record<SectionKey, string | null>>({
   overview: null,
@@ -327,7 +350,9 @@ const sectionError = reactive<Record<SectionKey, string | null>>({
   characters: null,
   relationships: null,
   chapter_outline: null,
-  chapters: null
+  chapters: null,
+  emotion_curve: null,
+  foreshadowing: null
 })
 
 const overviewMeta = reactive<{ title: string; updated_at: string | null }>({
@@ -388,6 +413,13 @@ const handleResize = () => {
 
 const loadSection = async (section: SectionKey, force = false) => {
   if (!projectId) return
+  
+  // 分析型Section使用独立的API，不需要在这里加载
+  const analysisSections: SectionKey[] = ['emotion_curve', 'foreshadowing']
+  if (analysisSections.includes(section)) {
+    return
+  }
+  
   if (!force && sectionData[section]) {
     return
   }
@@ -396,8 +428,8 @@ const loadSection = async (section: SectionKey, force = false) => {
   sectionError[section] = null
   try {
     const response: NovelSectionResponse = props.isAdmin
-      ? await AdminAPI.getNovelSection(projectId, section)
-      : await NovelAPI.getSection(projectId, section)
+      ? await AdminAPI.getNovelSection(projectId, section as NovelSectionType)
+      : await NovelAPI.getSection(projectId, section as NovelSectionType)
     sectionData[section] = response.data
     if (section === 'overview') {
       overviewMeta.title = response.data?.title || overviewMeta.title
@@ -575,10 +607,22 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Material 3 Transition Classes */
+.md-scale-enter-active,
+.md-scale-leave-active {
+  transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.md-scale-enter-from,
+.md-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
 /* Smooth scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -586,11 +630,11 @@ onBeforeUnmount(() => {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: var(--md-outline);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--md-on-surface-variant);
 }
 </style>

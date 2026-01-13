@@ -1,0 +1,9 @@
+AIDIR PATH=frontend/src/components/novel-detail|ROLE=小说详情组件_详情页子组件|BOUND=不含编辑功能_仅展示和分析|ENTRY=NO_ENTRY|EXPOSE=ui|FIND=概览:OverviewSection.vue_章节:ChaptersSection.vue_角色:CharactersSection.vue_情感:EmotionCurveSection.vue
+AILIST NAME=ChapterOutlineSection.vue|K=file|P=章节大纲区_大纲展示|E=component:ChapterOutlineSection|A=大纲列表
+AILIST NAME=ChaptersSection.vue|K=file|P=章节区_章节列表展示|E=component:ChaptersSection|A=章节列表_状态
+AILIST NAME=CharactersSection.vue|K=file|P=角色区_角色信息展示|E=component:CharactersSection|A=角色卡片
+AILIST NAME=EmotionCurveSection.vue|K=file|P=情感曲线区_情感分析图表|E=component:EmotionCurveSection|A=情感曲线图
+AILIST NAME=ForeshadowingSection.vue|K=file|P=伏笔区_伏笔管理展示|E=component:ForeshadowingSection|A=伏笔列表_回收状态
+AILIST NAME=OverviewSection.vue|K=file|P=概览区_小说基本信息|E=component:OverviewSection|A=基本信息展示
+AILIST NAME=RelationshipsSection.vue|K=file|P=关系区_角色关系展示|E=component:RelationshipsSection|A=关系图谱
+AILIST NAME=WorldSettingSection.vue|K=file|P=世界观区_世界设定展示|E=component:WorldSettingSection|A=世界观信息

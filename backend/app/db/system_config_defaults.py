@@ -1,3 +1,4 @@
+# AIMETA P=系统配置默认值_初始配置数据|R=默认配置字典|NR=不含配置逻辑|E=SYSTEM_CONFIG_DEFAULTS|X=internal|A=配置字典|D=none|S=none|RD=./README.ai
 from __future__ import annotations
 
 from dataclasses import dataclass

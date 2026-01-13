@@ -1,3 +1,4 @@
+<!-- AIMETA P=管理后台_管理员控制台|R=管理面板_子组件切换|NR=不含普通用户功能|E=route:/admin#component:AdminView|X=ui|A=管理面板|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-layout has-sider class="admin-layout">
     <n-layout-sider

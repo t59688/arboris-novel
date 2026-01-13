@@ -1,3 +1,4 @@
+<!-- AIMETA P=用户管理_用户列表管理|R=用户CRUD_权限|NR=不含认证功能|E=component:UserManagement|X=ui|A=用户组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-card :bordered="false" class="admin-card">
     <template #header>

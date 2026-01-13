@@ -1,3 +1,4 @@
+<!-- AIMETA P=编辑章节弹窗_章节信息编辑|R=章节编辑表单|NR=不含内容生成|E=component:WDEditChapterModal|X=ui|A=编辑弹窗|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div v-if="show" class="fixed inset-0 bg-black/30 z-50 flex justify-center items-center" @click.self="$emit('close')">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 p-8 transform transition-all duration-300 ease-out" :class="show ? 'scale-100 opacity-100' : 'scale-95 opacity-0'">

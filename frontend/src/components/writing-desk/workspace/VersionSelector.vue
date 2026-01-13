@@ -1,3 +1,4 @@
+<!-- AIMETA P=版本选择器_章节版本切换|R=版本列表_切换|NR=不含版本管理|E=component:VersionSelector|X=internal|A=选择器|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-6">
     <!-- AI 评审提示 -->

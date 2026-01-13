@@ -1,3 +1,4 @@
+# AIMETA P=提示词模型_AI提示模板存储|R=提示词表|NR=不含提示逻辑|E=Prompt|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from datetime import datetime
 from typing import Optional
 

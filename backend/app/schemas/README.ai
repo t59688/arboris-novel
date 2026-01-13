@@ -1,0 +1,8 @@
+AIDIR PATH=backend/app/schemas|ROLE=Pydantic模式_请求响应数据结构定义|BOUND=不含业务逻辑_不含数据库操作|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=小说:novel.py_用户:user.py_配置:config.py
+AILIST NAME=__init__.py|K=file|P=模式包初始化_导出所有模式类|E=-|A=-
+AILIST NAME=admin.py|K=file|P=管理员模式_管理API请求响应结构|E=AdminSchema|A=用户管理_统计响应
+AILIST NAME=config.py|K=file|P=配置模式_系统配置请求响应结构|E=ConfigSchema|A=配置读写结构
+AILIST NAME=llm_config.py|K=file|P=LLM配置模式_模型配置请求响应|E=LLMConfigSchema|A=LLM配置结构
+AILIST NAME=novel.py|K=file|P=小说模式_小说和章节请求响应|E=NovelSchema_ChapterSchema|A=小说结构_章节结构
+AILIST NAME=prompt.py|K=file|P=提示词模式_提示模板请求响应|E=PromptSchema|A=提示词结构
+AILIST NAME=user.py|K=file|P=用户模式_用户和认证请求响应|E=UserSchema_TokenSchema|A=用户结构_令牌结构

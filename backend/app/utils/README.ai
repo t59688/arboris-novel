@@ -1,0 +1,5 @@
+AIDIR PATH=backend/app/utils|ROLE=工具模块_通用工具函数|BOUND=不含业务逻辑_不含数据模型|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=情感分析:emotion_analyzer.py_JSON工具:json_utils.py_LLM工具:llm_tool.py
+AILIST NAME=__init__.py|K=file|P=工具包初始化_导出工具函数|E=-|A=-
+AILIST NAME=emotion_analyzer.py|K=file|P=情感分析器_基础情感识别|E=EmotionAnalyzer|A=关键词匹配_情感评分
+AILIST NAME=json_utils.py|K=file|P=JSON工具_JSON解析和修复|E=parse_json_safely|A=安全解析_格式修复
+AILIST NAME=llm_tool.py|K=file|P=LLM工具_大模型调用辅助|E=LLMTool|A=请求构建_响应解析

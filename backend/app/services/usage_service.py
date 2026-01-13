@@ -1,3 +1,4 @@
+# AIMETA P=使用统计服务_API调用统计|R=统计记录_限额检查|NR=不含数据访问|E=UsageService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..repositories.usage_metric_repository import UsageMetricRepository

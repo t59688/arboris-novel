@@ -1,0 +1,2 @@
+AIDIR PATH=backend/storage|ROLE=本地存储目录_SQLite数据库文件|BOUND=不含代码_不含配置_仅存储数据文件|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=数据库:app.db
+AILIST NAME=app.db|K=file|P=SQLite数据库文件_应用数据存储|E=-|A=所有业务数据

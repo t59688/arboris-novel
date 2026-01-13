@@ -1,3 +1,4 @@
+<!-- AIMETA P=生态图标_生态系统图标|R=SVG图标|NR=不含业务逻辑|E=component:IconEcosystem|X=internal|A=图标|D=vue|S=dom|RD=./README.ai -->
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="currentColor">
     <path

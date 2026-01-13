@@ -1,0 +1,2 @@
+AIDIR PATH=frontend/public|ROLE=静态资源目录_公共文件|BOUND=不含源代码_仅静态资源|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=favicon图标
+AILIST NAME=favicon.ico|K=file|P=网站图标_浏览器标签图标|E=-|A=-

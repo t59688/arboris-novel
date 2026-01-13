@@ -1,3 +1,4 @@
+# AIMETA P=仓库基类_通用CRUD方法|R=create_get_update_delete|NR=不含具体表操作|E=BaseRepository|X=internal|A=基类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Any, Generic, Iterable, Optional, TypeVar
 
 from sqlalchemy import select

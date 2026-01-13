@@ -1,3 +1,4 @@
+# AIMETA P=更新日志服务_日志业务逻辑|R=日志CRUD|NR=不含数据访问|E=UpdateLogService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import List, Optional
 
 from fastapi import HTTPException, status

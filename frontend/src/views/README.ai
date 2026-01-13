@@ -1,0 +1,13 @@
+AIDIR PATH=frontend/src/views|ROLE=页面视图_路由对应的页面组件|BOUND=不含可复用组件_仅页面级组件|ENTRY=NO_ENTRY|EXPOSE=ui|FIND=工作区入口:WorkspaceEntry.vue_写作台:WritingDesk.vue_小说详情:NovelDetail.vue_登录:Login.vue
+AILIST NAME=AboutView.vue|K=file|P=关于页_应用介绍页面|E=route:/about#component:AboutView|A=关于信息
+AILIST NAME=AdminNovelDetail.vue|K=file|P=管理员小说详情_管理员查看小说|E=route:/admin/novel/:id#component:AdminNovelDetail|A=小说详情_管理操作
+AILIST NAME=AdminView.vue|K=file|P=管理后台_管理员控制台|E=route:/admin#component:AdminView|A=管理面板_子组件切换
+AILIST NAME=HomeView.vue|K=file|P=首页_应用首页|E=route:/home#component:HomeView|A=首页内容
+AILIST NAME=InspirationMode.vue|K=file|P=灵感模式_AI对话创作|E=route:/inspiration#component:InspirationMode|A=对话创作界面
+AILIST NAME=Login.vue|K=file|P=登录页_用户登录|E=route:/login#component:Login|A=登录表单
+AILIST NAME=NovelDetail.vue|K=file|P=小说详情_小说信息展示|E=route:/detail/:id#component:NovelDetail|A=详情展示_分析
+AILIST NAME=NovelWorkspace.vue|K=file|P=小说工作区_小说列表管理|E=route:/workspace#component:NovelWorkspace|A=小说列表_创建
+AILIST NAME=Register.vue|K=file|P=注册页_用户注册|E=route:/register#component:Register|A=注册表单
+AILIST NAME=SettingsView.vue|K=file|P=设置页_用户设置|E=route:/settings#component:SettingsView|A=用户设置表单
+AILIST NAME=WorkspaceEntry.vue|K=file|P=工作区入口_应用主入口|E=route:/#component:WorkspaceEntry|A=入口导航
+AILIST NAME=WritingDesk.vue|K=file|P=写作台_章节编辑主页面|E=route:/novel/:id#component:WritingDesk|A=写作界面_章节管理

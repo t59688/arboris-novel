@@ -1,3 +1,4 @@
+<!-- AIMETA P=对话输入_用户输入组件|R=输入框_发送|NR=不含消息展示|E=component:ConversationInput|X=internal|A=输入组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="fade-in">
     <!-- 加载状态 -->

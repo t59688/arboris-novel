@@ -1,3 +1,4 @@
+# AIMETA P=用户模型_用户账户定义|R=用户表|NR=不含用户逻辑|E=User|X=internal|A=ORM模型|D=sqlalchemy|S=none|RD=./README.ai
 from datetime import datetime
 from typing import Optional
 

@@ -1,3 +1,4 @@
+<!-- AIMETA P=概览区_小说基本信息|R=基本信息展示|NR=不含编辑功能|E=component:OverviewSection|X=ui|A=概览组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-6">
     <div class="bg-white/95 rounded-2xl shadow-sm border border-slate-200 p-6">

@@ -1,3 +1,4 @@
+# AIMETA P=管理员设置仓库_设置数据访问|R=设置CRUD|NR=不含业务逻辑|E=AdminSettingRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Optional
 
 from sqlalchemy import select

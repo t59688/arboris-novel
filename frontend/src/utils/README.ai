@@ -1,0 +1,2 @@
+AIDIR PATH=frontend/src/utils|ROLE=工具函数_通用辅助函数|BOUND=不含业务逻辑_仅通用工具|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=日期:date.ts
+AILIST NAME=date.ts|K=file|P=日期工具_日期格式化函数|E=formatDate|A=日期格式化_相对时间

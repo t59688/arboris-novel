@@ -1,0 +1,11 @@
+AIDIR PATH=frontend/src|ROLE=前端源代码_Vue组件_路由_状态管理|BOUND=不含构建配置_不含静态资源|ENTRY=main.ts|EXPOSE=ui|FIND=页面:views_组件:components_路由:router_状态:stores_API:api
+AILIST NAME=api|K=dir|P=API客户端_后端接口调用封装|E=-|A=-
+AILIST NAME=assets|K=dir|P=静态资源_CSS样式文件|E=-|A=-
+AILIST NAME=components|K=dir|P=Vue组件_可复用UI组件|E=-|A=-
+AILIST NAME=composables|K=dir|P=组合式函数_Vue3_Composition_API|E=-|A=-
+AILIST NAME=router|K=dir|P=路由配置_Vue_Router定义|E=-|A=-
+AILIST NAME=stores|K=dir|P=状态管理_Pinia_Store定义|E=-|A=-
+AILIST NAME=utils|K=dir|P=工具函数_通用辅助函数|E=-|A=-
+AILIST NAME=views|K=dir|P=页面视图_路由对应的页面组件|E=-|A=-
+AILIST NAME=main.ts|K=file|P=Vue应用入口_创建和挂载应用|E=ENTRYPOINT|A=createApp_use_mount
+AILIST NAME=App.vue|K=file|P=根组件_应用根节点|E=component:App|A=RouterView_全局布局

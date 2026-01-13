@@ -1,3 +1,4 @@
+<!-- AIMETA P=根组件_应用根节点|R=全局布局_RouterView|NR=不含页面逻辑|E=component:App|X=ui|A=RouterView|D=vue-router|S=dom|RD=./README.ai -->
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { NMessageProvider } from 'naive-ui'

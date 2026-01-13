@@ -1,3 +1,4 @@
+<!-- AIMETA P=章节区_章节列表展示|R=章节列表_状态|NR=不含编辑功能|E=component:ChaptersSection|X=ui|A=章节组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="flex flex-col h-full min-h-0 overflow-hidden relative">
     <div class="flex flex-row flex-1 h-full lg:min-h-0 overflow-hidden">

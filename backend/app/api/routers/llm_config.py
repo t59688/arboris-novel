@@ -1,3 +1,4 @@
+# AIMETA P=LLM配置API_模型配置管理|R=LLM配置CRUD|NR=不含模型调用|E=route:GET_POST_/api/llm-config/*|X=http|A=配置CRUD|D=fastapi,sqlalchemy|S=db|RD=./README.ai
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status

@@ -1,3 +1,4 @@
+# AIMETA P=LLM配置仓库_配置数据访问|R=配置CRUD|NR=不含业务逻辑|E=LLMConfigRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Optional
 
 from sqlalchemy import select

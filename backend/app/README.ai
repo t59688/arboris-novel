@@ -1,0 +1,13 @@
+AIDIR PATH=backend/app|ROLE=FastAPI应用核心_包含路由_服务_模型_配置|BOUND=不含数据库迁移脚本_不含测试用例_不含部署配置|ENTRY=main.py|EXPOSE=http|FIND=API入口:api/routers_业务逻辑:services_数据模型:models_数据库:db
+AILIST NAME=api|K=dir|P=API层_路由定义和请求处理|E=-|A=-
+AILIST NAME=config|K=dir|P=配置模块_Celery和应用配置|E=-|A=-
+AILIST NAME=core|K=dir|P=核心模块_配置_依赖注入_安全|E=-|A=-
+AILIST NAME=db|K=dir|P=数据库模块_会话管理和初始化|E=-|A=-
+AILIST NAME=models|K=dir|P=ORM模型_SQLAlchemy表定义|E=-|A=-
+AILIST NAME=repositories|K=dir|P=数据仓库_数据访问层|E=-|A=-
+AILIST NAME=schemas|K=dir|P=Pydantic模式_请求响应数据结构|E=-|A=-
+AILIST NAME=services|K=dir|P=业务服务_核心业务逻辑实现|E=-|A=-
+AILIST NAME=tasks|K=dir|P=异步任务_Celery后台任务|E=-|A=-
+AILIST NAME=utils|K=dir|P=工具模块_通用工具函数|E=-|A=-
+AILIST NAME=main.py|K=file|P=FastAPI应用入口_装配路由和中间件|E=ENTRYPOINT|A=uvicorn_app/main:app
+AILIST NAME=__init__.py|K=file|P=包初始化_标记为Python包|E=-|A=-

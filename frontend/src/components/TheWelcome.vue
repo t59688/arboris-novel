@@ -1,3 +1,4 @@
+<!-- AIMETA P=欢迎组件_欢迎页内容|R=欢迎信息|NR=不含业务功能|E=component:TheWelcome|X=internal|A=欢迎组件|D=vue|S=dom|RD=./README.ai -->
 <script setup lang="ts">
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'

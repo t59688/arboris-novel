@@ -1,0 +1,6 @@
+AIDIR PATH=frontend/src/components/icons|ROLE=图标组件_SVG图标封装|BOUND=不含业务逻辑_仅图标展示|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=所有图标组件:Icon*.vue
+AILIST NAME=IconCommunity.vue|K=file|P=社区图标_社区链接图标|E=component:IconCommunity|A=SVG图标
+AILIST NAME=IconDocumentation.vue|K=file|P=文档图标_文档链接图标|E=component:IconDocumentation|A=SVG图标
+AILIST NAME=IconEcosystem.vue|K=file|P=生态图标_生态系统图标|E=component:IconEcosystem|A=SVG图标
+AILIST NAME=IconSupport.vue|K=file|P=支持图标_支持链接图标|E=component:IconSupport|A=SVG图标
+AILIST NAME=IconTooling.vue|K=file|P=工具图标_工具链接图标|E=component:IconTooling|A=SVG图标

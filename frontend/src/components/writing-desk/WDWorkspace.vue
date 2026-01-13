@@ -1,3 +1,4 @@
+<!-- AIMETA P=写作台工作区_主编辑区域|R=章节编辑_生成|NR=不含侧边栏|E=component:WDWorkspace|X=ui|A=工作区|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="flex-1 min-w-0 h-full">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 h-full flex flex-col">
@@ -374,7 +375,10 @@ const currentComponentProps = computed(() => {
     }
   }
   if (selectedChapter.value?.content) {
-    return { selectedChapter: selectedChapter.value }
+    return { 
+      selectedChapter: selectedChapter.value,
+      projectId: props.project?.id
+    }
   }
   if (isChapterFailed(props.selectedChapterNumber)) {
     return {

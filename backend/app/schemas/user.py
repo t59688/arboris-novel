@@ -1,3 +1,4 @@
+# AIMETA P=用户模式_用户和认证请求响应|R=用户结构_令牌结构|NR=不含业务逻辑|E=UserSchema_TokenSchema|X=internal|A=Pydantic模式|D=pydantic|S=none|RD=./README.ai
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 

@@ -1,3 +1,4 @@
+<!-- AIMETA P=文档图标_文档链接图标|R=SVG图标|NR=不含业务逻辑|E=component:IconDocumentation|X=internal|A=图标|D=vue|S=dom|RD=./README.ai -->
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" fill="currentColor">
     <path

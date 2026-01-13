@@ -1,3 +1,4 @@
+<!-- AIMETA P=示例组件_Vue默认示例|R=示例展示|NR=不含业务功能|E=component:HelloWorld|X=internal|A=示例|D=vue|S=dom|RD=./README.ai -->
 <script setup lang="ts">
 defineProps<{
   msg: string

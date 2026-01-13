@@ -1,3 +1,4 @@
+<!-- AIMETA P=势力编辑器_势力信息编辑|R=势力CRUD|NR=不含角色编辑|E=component:FactionsEditor|X=internal|A=编辑器|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-4 max-h-96 overflow-y-auto p-1">
     <div v-for="(faction, index) in localFactions" :key="index" class="p-4 border border-gray-200 rounded-lg bg-gray-50 relative">

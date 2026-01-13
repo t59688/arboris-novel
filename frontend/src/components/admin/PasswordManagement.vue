@@ -1,3 +1,4 @@
+<!-- AIMETA P=密码管理_管理员密码修改|R=密码修改表单|NR=不含用户管理|E=component:PasswordManagement|X=ui|A=密码组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-space vertical size="large" class="password-container">
     <n-card :bordered="false" class="password-card">

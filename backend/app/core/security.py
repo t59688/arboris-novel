@@ -1,3 +1,4 @@
+# AIMETA P=安全模块_JWT令牌和密码处理|R=JWT生成验证_密码哈希|NR=不含用户管理|E=create_token_verify_password|X=internal|A=安全函数|D=jose,passlib|S=none|RD=./README.ai
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 

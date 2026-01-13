@@ -1,0 +1,8 @@
+AIDIR PATH=backend|ROLE=Python后端服务_FastAPI框架_提供小说创作API和业务逻辑|BOUND=不含前端代码_不含静态资源_不处理用户界面|ENTRY=app/main.py|EXPOSE=http|FIND=API路由:app/api/routers_业务服务:app/services_数据模型:app/models
+AILIST NAME=app|K=dir|P=FastAPI应用主目录_包含所有后端代码|E=-|A=-
+AILIST NAME=db|K=dir|P=数据库SQL脚本_表结构定义|E=-|A=-
+AILIST NAME=prompts|K=dir|P=AI提示词模板_LLM调用的系统提示|E=-|A=-
+AILIST NAME=storage|K=dir|P=本地存储目录_SQLite数据库文件|E=-|A=-
+AILIST NAME=requirements.txt|K=file|P=Python依赖清单_pip安装配置|E=-|A=-
+AILIST NAME=env.example|K=file|P=环境变量示例_配置模板|E=-|A=-
+AILIST NAME=.env|K=file|P=环境变量配置_敏感信息存储|E=-|A=-

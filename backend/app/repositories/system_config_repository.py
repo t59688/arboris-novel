@@ -1,3 +1,4 @@
+# AIMETA P=系统配置仓库_配置数据访问|R=配置CRUD|NR=不含业务逻辑|E=SystemConfigRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Iterable, Optional
 
 from sqlalchemy import select

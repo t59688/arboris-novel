@@ -1,3 +1,4 @@
+<!-- AIMETA P=蓝图卡片_小说蓝图展示|R=蓝图信息展示|NR=不含编辑功能|E=component:BlueprintCard|X=internal|A=卡片组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="bg-white rounded-lg shadow-sm p-6">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">小说蓝图</h3>

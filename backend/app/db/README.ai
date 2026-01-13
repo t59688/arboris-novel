@@ -1,0 +1,6 @@
+AIDIR PATH=backend/app/db|ROLE=数据库模块_会话管理_初始化_基类定义|BOUND=不含业务逻辑_不含具体表定义|ENTRY=session.py|EXPOSE=internal|FIND=会话:session.py_初始化:init_db.py_基类:base.py
+AILIST NAME=__init__.py|K=file|P=数据库包初始化_导出会话和基类|E=-|A=-
+AILIST NAME=base.py|K=file|P=ORM基类_SQLAlchemy声明基类|E=Base|A=声明基类_元数据
+AILIST NAME=init_db.py|K=file|P=数据库初始化_创建表和默认数据|E=init_db|A=创建表_初始化管理员
+AILIST NAME=session.py|K=file|P=数据库会话_异步会话工厂|E=AsyncSessionLocal_get_db|A=异步会话_连接池
+AILIST NAME=system_config_defaults.py|K=file|P=系统配置默认值_初始配置数据|E=SYSTEM_CONFIG_DEFAULTS|A=默认配置字典

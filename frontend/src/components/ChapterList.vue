@@ -1,3 +1,4 @@
+<!-- AIMETA P=章节列表_章节目录展示|R=章节列表渲染|NR=不含章节编辑|E=component:ChapterList|X=internal|A=列表组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="bg-white rounded-lg shadow-sm p-6">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">章节列表</h3>

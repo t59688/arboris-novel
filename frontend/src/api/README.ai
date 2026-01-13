@@ -1,0 +1,5 @@
+AIDIR PATH=frontend/src/api|ROLE=API客户端_后端接口调用封装|BOUND=不含UI逻辑_不含状态管理|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=小说API:novel.ts_管理API:admin.ts_LLM_API:llm.ts
+AILIST NAME=admin.ts|K=file|P=管理员API客户端_管理接口调用|E=api:admin|A=用户管理_系统配置_统计
+AILIST NAME=llm.ts|K=file|P=LLM_API客户端_模型配置接口|E=api:llm|A=LLM配置CRUD
+AILIST NAME=novel.ts|K=file|P=小说API客户端_小说和章节接口|E=api:novel|A=小说CRUD_章节管理_生成
+AILIST NAME=updates.ts|K=file|P=更新API客户端_更新日志接口|E=api:updates|A=更新日志查询

@@ -1,3 +1,4 @@
+# AIMETA P=导入服务_小说导入业务逻辑|R=小说导入_格式转换|NR=不含内容生成|E=ImportService|X=internal|A=服务类|D=sqlalchemy|S=db,fs|RD=./README.ai
 from __future__ import annotations
 
 import json
@@ -127,7 +128,10 @@ class ImportService:
                     outline = ChapterOutlineSchema(
                         chapter_number=i,
                         title=chap_title,
-                        summary=""
+                        summary="",
+                        narrative_phase=None,
+                        foreshadowing=None,
+                        emotion_hook=None,
                     )
                 final_outlines.append(outline)
             blueprint_data.chapter_outline = final_outlines

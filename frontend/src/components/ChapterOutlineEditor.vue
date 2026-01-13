@@ -1,3 +1,4 @@
+<!-- AIMETA P=章节大纲编辑_大纲编辑器|R=大纲编辑|NR=不含章节内容|E=component:ChapterOutlineEditor|X=internal|A=编辑器|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-4 max-h-96 overflow-y-auto p-1">
     <div v-for="(chapter, index) in localOutline" :key="index" class="p-4 border border-gray-200 rounded-lg bg-gray-50">

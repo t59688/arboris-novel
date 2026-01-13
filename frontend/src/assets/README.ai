@@ -1,0 +1,3 @@
+AIDIR PATH=frontend/src/assets|ROLE=静态资源_CSS样式文件|BOUND=不含JS逻辑_不含Vue组件|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=基础样式:base.css_主样式:main.css
+AILIST NAME=base.css|K=file|P=基础CSS_CSS变量和重置样式|E=-|A=CSS变量_重置样式
+AILIST NAME=main.css|K=file|P=主CSS_全局样式和Tailwind导入|E=-|A=全局样式_Tailwind

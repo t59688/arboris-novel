@@ -1,3 +1,4 @@
+<!-- AIMETA P=生成失败_生成错误状态|R=错误提示_重试|NR=不含生成逻辑|E=component:ChapterFailed|X=internal|A=错误状态|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="h-full flex items-center justify-center">
     <div class="text-center max-w-md">

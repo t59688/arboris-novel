@@ -1,3 +1,4 @@
+<!-- AIMETA P=生成大纲弹窗_大纲生成界面|R=大纲生成表单|NR=不含生成逻辑|E=component:WDGenerateOutlineModal|X=ui|A=生成弹窗|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <TransitionRoot as="template" :show="show">
     <Dialog as="div" class="relative z-50" @close="$emit('close')">

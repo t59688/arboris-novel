@@ -1,3 +1,4 @@
+<!-- AIMETA P=写作台头部_顶部导航栏|R=导航_操作按钮|NR=不含内容区域|E=component:WDHeader|X=ui|A=头部组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="flex-shrink-0 z-30 bg-white/80 backdrop-blur-lg border-b border-gray-200 shadow-sm">
     <div class="px-4 sm:px-6 lg:px-8">

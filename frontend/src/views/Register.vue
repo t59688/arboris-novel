@@ -1,3 +1,4 @@
+<!-- AIMETA P=注册页_用户注册|R=注册表单|NR=不含登录功能|E=route:/register#component:Register|X=ui|A=注册表单|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen p-4">
     <div class="mb-12">

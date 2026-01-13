@@ -1,3 +1,4 @@
+# AIMETA P=依赖注入_FastAPI依赖项定义|R=数据库会话_当前用户获取|NR=不含业务逻辑|E=get_db_get_current_user|X=internal|A=依赖函数|D=fastapi,sqlalchemy|S=db|RD=./README.ai
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession

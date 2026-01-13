@@ -18,8 +18,9 @@
     "@fontsource/noto-sans-sc": "^5.2.8",
     "@headlessui/vue": "^1.7.23",
     "@types/marked": "^5.0.2",
-    "naive-ui": "^2.39.0",
+    "chart.js": "^4.5.1",
     "marked": "^16.3.0",
+    "naive-ui": "^2.39.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"

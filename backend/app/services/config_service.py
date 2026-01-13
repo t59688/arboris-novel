@@ -1,3 +1,4 @@
+# AIMETA P=配置服务_系统配置业务逻辑|R=配置读写|NR=不含数据访问|E=ConfigService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Iterable, Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession

@@ -1,3 +1,4 @@
+# AIMETA P=写作API_章节生成和大纲创建|R=章节生成_大纲生成_评审|NR=不含数据存储|E=route:POST_/api/writer/*|X=http|A=生成_评审|D=fastapi,openai|S=net,db|RD=./README.ai
 import json
 import logging
 import os
@@ -186,7 +187,7 @@ async def generate_chapter(
         ("[上一章摘要]", previous_summary_text),
         ("[上一章结尾]", previous_tail_excerpt),
         ("[检索到的剧情上下文](Markdown)", rag_chunks_text),
-        ("[检索到的章节摘要]", rag_summaries_text),
+        ("[检索到的章节摘要](Markdown)", rag_summaries_text),
         (
             "[当前章节目标]",
             f"标题：{outline_title}\n摘要：{outline_summary}\n写作要求：{writing_notes}",
@@ -194,6 +195,7 @@ async def generate_chapter(
     ]
     prompt_input = "\n\n".join(f"{title}\n{content}" for title, content in prompt_sections if content)
     logger.debug("章节写作提示词：%s\n%s", writer_prompt, prompt_input)
+    
     async def _generate_single_version(idx: int) -> Dict:
         try:
             response = await llm_service.get_llm_response(
@@ -238,9 +240,22 @@ async def generate_chapter(
         request.chapter_number,
         version_count,
     )
+    
     raw_versions = []
-    for idx in range(version_count):
-        raw_versions.append(await _generate_single_version(idx))
+    try:
+        for idx in range(version_count):
+            raw_versions.append(await _generate_single_version(idx))
+    except Exception as exc:
+        logger.exception("项目 %s 生成第 %s 章时发生异常: %s", project_id, request.chapter_number, exc)
+        chapter.status = "failed"
+        await session.commit()
+        if isinstance(exc, HTTPException):
+            raise exc
+        raise HTTPException(
+            status_code=500,
+            detail=f"生成章节失败: {str(exc)[:200]}"
+        )
+
     contents: List[str] = []
     metadata: List[Dict] = []
     for variant in raw_versions:
@@ -268,23 +283,13 @@ async def generate_chapter(
 
 async def _resolve_version_count(session: AsyncSession) -> int:
     repo = SystemConfigRepository(session)
-    record = await repo.get_by_key("writer.chapter_versions")
-    if record:
+    record = await repo.get_by_key("writer.version_count")
+    if record and record.value:
         try:
-            value = int(record.value)
-            if value > 0:
-                return value
-        except (TypeError, ValueError):
-            pass
-    env_value = os.getenv("WRITER_CHAPTER_VERSION_COUNT")
-    if env_value:
-        try:
-            value = int(env_value)
-            if value > 0:
-                return value
+            return int(record.value)
         except ValueError:
             pass
-    return 3
+    return int(os.getenv("WRITER_VERSION_COUNT", "3"))
 
 
 @router.post("/novels/{project_id}/chapters/select", response_model=NovelProjectSchema)
@@ -295,60 +300,34 @@ async def select_chapter_version(
     current_user: UserInDB = Depends(get_current_user),
 ) -> NovelProjectSchema:
     novel_service = NovelService(session)
-    llm_service = LLMService(session)
-
     project = await novel_service.ensure_project_owner(project_id, current_user.id)
-    chapter = next((ch for ch in project.chapters if ch.chapter_number == request.chapter_number), None)
-    if not chapter:
-        logger.warning("项目 %s 未找到第 %s 章，无法选择版本", project_id, request.chapter_number)
-        raise HTTPException(status_code=404, detail="章节不存在")
+    chapter = await novel_service.get_or_create_chapter(project_id, request.chapter_number)
 
-    selected = await novel_service.select_chapter_version(chapter, request.version_index)
-    logger.info(
-        "用户 %s 选择了项目 %s 第 %s 章的第 %s 个版本",
-        current_user.id,
-        project_id,
-        request.chapter_number,
-        request.version_index,
-    )
-    if selected and selected.content:
-        summary = await llm_service.get_summary(
-            selected.content,
-            temperature=0.15,
-            user_id=current_user.id,
-            timeout=180.0,
+    # 使用 novel_service.select_chapter_version 确保排序一致
+    # 该函数会按 created_at 排序并校验索引
+    selected_version = await novel_service.select_chapter_version(chapter, request.version_index)
+    
+    # 校验内容是否为空
+    if not selected_version.content or len(selected_version.content.strip()) == 0:
+        # 回滚状态，不标记为 successful
+        await session.rollback()
+        raise HTTPException(status_code=400, detail="选中的版本内容为空，无法确认为最终版")
+
+    # 异步触发向量化入库
+    try:
+        llm_service = LLMService(session)
+        ingest_service = ChapterIngestionService(llm_service=llm_service)
+        await ingest_service.ingest_chapter(
+            project_id=project_id,
+            chapter_number=request.chapter_number,
+            title=chapter.title or f"第{request.chapter_number}章",
+            content=selected_version.content,
+            summary=None
         )
-        chapter.real_summary = remove_think_tags(summary)
-        await session.commit()
-
-        # 选定版本后同步向量库，确保后续章节可检索到最新内容
-        vector_store: Optional[VectorStoreService]
-        if not settings.vector_store_enabled:
-            vector_store = None
-        else:
-            try:
-                vector_store = VectorStoreService()
-            except RuntimeError as exc:
-                logger.warning("向量库初始化失败，跳过章节向量同步: %s", exc)
-                vector_store = None
-
-        if vector_store:
-            ingestion_service = ChapterIngestionService(llm_service=llm_service, vector_store=vector_store)
-            outline = next((item for item in project.outlines if item.chapter_number == chapter.chapter_number), None)
-            chapter_title = outline.title if outline and outline.title else f"第{chapter.chapter_number}章"
-            await ingestion_service.ingest_chapter(
-                project_id=project_id,
-                chapter_number=chapter.chapter_number,
-                title=chapter_title,
-                content=selected.content,
-                summary=chapter.real_summary,
-                user_id=current_user.id,
-            )
-            logger.info(
-                "项目 %s 第 %s 章已同步至向量库",
-                project_id,
-                chapter.chapter_number,
-            )
+        logger.info(f"章节 {request.chapter_number} 向量化入库成功")
+    except Exception as e:
+        logger.error(f"章节 {request.chapter_number} 向量化入库失败: {e}")
+        # 向量化失败不应阻止版本选择，仅记录错误
 
     return await _load_project_schema(novel_service, project_id, current_user.id)
 
@@ -365,133 +344,120 @@ async def evaluate_chapter(
     llm_service = LLMService(session)
 
     project = await novel_service.ensure_project_owner(project_id, current_user.id)
-    chapter = next((ch for ch in project.chapters if ch.chapter_number == request.chapter_number), None)
-    if not chapter:
-        logger.warning("项目 %s 未找到第 %s 章，无法执行评估", project_id, request.chapter_number)
-        raise HTTPException(status_code=404, detail="章节不存在")
-    if not chapter.versions:
-        logger.warning("项目 %s 第 %s 章无可评估版本", project_id, request.chapter_number)
-        raise HTTPException(status_code=400, detail="无可评估的章节版本")
-
-    evaluator_prompt = await prompt_service.get_prompt("evaluation")
-    if not evaluator_prompt:
-        logger.error("缺少评估提示词，项目 %s 第 %s 章评估失败", project_id, request.chapter_number)
-        raise HTTPException(status_code=500, detail="缺少评估提示词，请联系管理员配置 'evaluation' 提示词")
-
-    project_schema = await novel_service._serialize_project(project)
-    blueprint_dict = project_schema.blueprint.model_dump()
-
-    versions_to_evaluate = [
-        {"version_id": idx + 1, "content": version.content}
-        for idx, version in enumerate(sorted(chapter.versions, key=lambda item: item.created_at))
-    ]
-    # print("blueprint_dict:",blueprint_dict)
-    evaluator_payload = {
-        "novel_blueprint": blueprint_dict,
-        "content_to_evaluate": {
-            "chapter_number": chapter.chapter_number,
-            "versions": versions_to_evaluate,
-        },
-    }
-
-    evaluation_raw = await llm_service.get_llm_response(
-        system_prompt=evaluator_prompt,
-        conversation_history=[{"role": "user", "content": json.dumps(evaluator_payload, ensure_ascii=False)}],
-        temperature=0.3,
-        user_id=current_user.id,
-        timeout=360.0,
-    )
-    evaluation_clean = remove_think_tags(evaluation_raw)
-    await novel_service.add_chapter_evaluation(chapter, None, evaluation_clean)
-    logger.info("项目 %s 第 %s 章评估完成", project_id, request.chapter_number)
-
-    return await _load_project_schema(novel_service, project_id, current_user.id)
-
-
-@router.post("/novels/{project_id}/chapters/outline", response_model=NovelProjectSchema)
-async def generate_chapter_outline(
-    project_id: str,
-    request: GenerateOutlineRequest,
-    session: AsyncSession = Depends(get_session),
-    current_user: UserInDB = Depends(get_current_user),
-) -> NovelProjectSchema:
-    novel_service = NovelService(session)
-    prompt_service = PromptService(session)
-    llm_service = LLMService(session)
-
-    await novel_service.ensure_project_owner(project_id, current_user.id)
-    logger.info(
-        "用户 %s 请求生成项目 %s 的章节大纲，起始章节 %s，数量 %s",
-        current_user.id,
-        project_id,
-        request.start_chapter,
-        request.num_chapters,
-    )
-    outline_prompt = await prompt_service.get_prompt("outline")
-    if not outline_prompt:
-        logger.error("缺少大纲提示词，项目 %s 大纲生成失败", project_id)
-        raise HTTPException(status_code=500, detail="缺少大纲提示词，请联系管理员配置 'outline' 提示词")
-
-    project_schema = await novel_service.get_project_schema(project_id, current_user.id)
-    blueprint_dict = project_schema.blueprint.model_dump()
-
-    payload = {
-        "novel_blueprint": blueprint_dict,
-        "wait_to_generate": {
-            "start_chapter": request.start_chapter,
-            "num_chapters": request.num_chapters,
-        },
-    }
-
-    response = await llm_service.get_llm_response(
-        system_prompt=outline_prompt,
-        conversation_history=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
-        temperature=0.7,
-        user_id=current_user.id,
-        timeout=360.0,
-    )
-    normalized = unwrap_markdown_json(remove_think_tags(response))
-    try:
-        data = json.loads(normalized)
-    except json.JSONDecodeError as exc:
-        logger.error(
-            "项目 %s 大纲生成 JSON 解析失败: %s, 原始内容预览: %s",
-            project_id,
-            exc,
-            normalized[:500],
+    # 确保预加载 selected_version 关系
+    from sqlalchemy.orm import selectinload
+    stmt = (
+        select(Chapter)
+        .options(selectinload(Chapter.selected_version))
+        .where(
+            Chapter.project_id == project_id,
+            Chapter.chapter_number == request.chapter_number,
         )
-        raise HTTPException(
-            status_code=500,
-            detail=f"章节大纲生成失败，AI 返回的内容格式不正确: {str(exc)}"
-        ) from exc
+    )
+    result = await session.execute(stmt)
+    chapter = result.scalars().first()
+    
+    if not chapter:
+        chapter = await novel_service.get_or_create_chapter(project_id, request.chapter_number)
 
-    new_outlines = data.get("chapters", [])
-    for item in new_outlines:
-        stmt = (
-            select(ChapterOutline)
+    # 如果没有选中版本，使用最新版本进行评审
+    version_to_evaluate = chapter.selected_version
+    if not version_to_evaluate:
+        # 获取该章节的所有版本，选择最新的一个
+        from sqlalchemy.orm import selectinload
+        stmt_versions = (
+            select(Chapter)
+            .options(selectinload(Chapter.versions))
             .where(
-                ChapterOutline.project_id == project_id,
-                ChapterOutline.chapter_number == item.get("chapter_number"),
+                Chapter.project_id == project_id,
+                Chapter.chapter_number == request.chapter_number,
+            )
+        )
+        result_versions = await session.execute(stmt_versions)
+        chapter_with_versions = result_versions.scalars().first()
+        
+        if not chapter_with_versions or not chapter_with_versions.versions:
+            raise HTTPException(status_code=400, detail="该章节还没有生成任何版本，无法进行评审")
+        
+        # 使用最新的版本（列表中的最后一个）
+        version_to_evaluate = chapter_with_versions.versions[-1]
+    
+    if not version_to_evaluate or not version_to_evaluate.content:
+        raise HTTPException(status_code=400, detail="版本内容为空，无法进行评审")
+
+    chapter.status = "evaluating"
+    await session.commit()
+
+    eval_prompt = await prompt_service.get_prompt("evaluation")
+    if not eval_prompt:
+        logger.warning("未配置名为 'evaluation' 的评审提示词，将跳过 AI 评审")
+        # 使用 add_chapter_evaluation 创建评审记录
+        await novel_service.add_chapter_evaluation(
+            chapter=chapter,
+            version=version_to_evaluate,
+            feedback="未配置评审提示词",
+            decision="skipped"
+        )
+        return await _load_project_schema(novel_service, project_id, current_user.id)
+
+    try:
+        evaluation_raw = await llm_service.get_llm_response(
+            system_prompt=eval_prompt,
+            conversation_history=[{"role": "user", "content": version_to_evaluate.content}],
+            temperature=0.3,
+            user_id=current_user.id,
+        )
+        evaluation_text = remove_think_tags(evaluation_raw)
+        
+        # 校验 AI 返回的内容不为空
+        if not evaluation_text or len(evaluation_text.strip()) == 0:
+            raise ValueError("评审结果为空")
+        
+        # 使用 add_chapter_evaluation 创建评审记录
+        # 这会自动设置状态为 WAITING_FOR_CONFIRM
+        await novel_service.add_chapter_evaluation(
+            chapter=chapter,
+            version=version_to_evaluate,
+            feedback=evaluation_text,
+            decision="reviewed"
+        )
+        logger.info("项目 %s 第 %s 章评审成功", project_id, request.chapter_number)
+    except Exception as exc:
+        logger.exception("项目 %s 第 %s 章评审失败: %s", project_id, request.chapter_number, exc)
+        # 回滚事务，恢复状态
+        await session.rollback()
+        
+        # 重新加载 chapter 对象（因为 rollback 后对象已脱离 session）
+        stmt = (
+            select(Chapter)
+            .where(
+                Chapter.project_id == project_id,
+                Chapter.chapter_number == request.chapter_number,
             )
         )
         result = await session.execute(stmt)
-        record = result.scalars().first()
-        if record:
-            record.title = item.get("title", record.title)
-            record.summary = item.get("summary", record.summary)
-        else:
-            session.add(
-                ChapterOutline(
-                    project_id=project_id,
-                    chapter_number=item.get("chapter_number"),
-                    title=item.get("title", ""),
-                    summary=item.get("summary"),
-                )
+        chapter = result.scalars().first()
+        
+        if chapter:
+            # 使用 add_chapter_evaluation 创建失败记录
+            # 注意：这里不能再用 add_chapter_evaluation，因为它会设置状态为 waiting_for_confirm
+            # 失败时应该设置为 evaluation_failed
+            from app.models.novel import ChapterEvaluation
+            evaluation_record = ChapterEvaluation(
+                chapter_id=chapter.id,
+                version_id=version_to_evaluate.id,
+                decision="failed",
+                feedback=f"评审失败: {str(exc)}",
+                score=None
             )
-    await session.commit()
-    logger.info("项目 %s 章节大纲生成完成", project_id)
-
-    return await novel_service.get_project_schema(project_id, current_user.id)
+            session.add(evaluation_record)
+            chapter.status = "evaluation_failed"
+            await session.commit()
+        
+        # 抛出异常，让前端知道评审失败
+        raise HTTPException(status_code=500, detail=f"评审失败: {str(exc)}")
+    
+    return await _load_project_schema(novel_service, project_id, current_user.id)
 
 
 @router.post("/novels/{project_id}/chapters/update-outline", response_model=NovelProjectSchema)
@@ -503,35 +469,19 @@ async def update_chapter_outline(
 ) -> NovelProjectSchema:
     novel_service = NovelService(session)
     await novel_service.ensure_project_owner(project_id, current_user.id)
-    logger.info(
-        "用户 %s 更新项目 %s 第 %s 章大纲",
-        current_user.id,
-        project_id,
-        request.chapter_number,
-    )
 
-    stmt = (
-        select(ChapterOutline)
-        .where(
-            ChapterOutline.project_id == project_id,
-            ChapterOutline.chapter_number == request.chapter_number,
-        )
-    )
-    result = await session.execute(stmt)
-    outline = result.scalars().first()
+    outline = await novel_service.get_outline(project_id, request.chapter_number)
     if not outline:
-        outline = ChapterOutline(
-            project_id=project_id,
-            chapter_number=request.chapter_number,
-        )
-        session.add(outline)
+        raise HTTPException(status_code=404, detail="未找到对应章节大纲")
 
     outline.title = request.title
     outline.summary = request.summary
+    outline.narrative_phase = request.narrative_phase
+    outline.foreshadowing = request.foreshadowing
+    outline.emotion_hook = request.emotion_hook
     await session.commit()
-    logger.info("项目 %s 第 %s 章大纲已更新", project_id, request.chapter_number)
 
-    return await novel_service.get_project_schema(project_id, current_user.id)
+    return await _load_project_schema(novel_service, project_id, current_user.id)
 
 
 @router.post("/novels/{project_id}/chapters/delete", response_model=NovelProjectSchema)
@@ -541,45 +491,85 @@ async def delete_chapters(
     session: AsyncSession = Depends(get_session),
     current_user: UserInDB = Depends(get_current_user),
 ) -> NovelProjectSchema:
-    if not request.chapter_numbers:
-        logger.warning("项目 %s 删除章节时未提供章节号", project_id)
-        raise HTTPException(status_code=400, detail="请提供要删除的章节号列表")
     novel_service = NovelService(session)
-    llm_service = LLMService(session)
     await novel_service.ensure_project_owner(project_id, current_user.id)
-    logger.info(
-        "用户 %s 删除项目 %s 的章节 %s",
-        current_user.id,
-        project_id,
-        request.chapter_numbers,
+
+    for ch_num in request.chapter_numbers:
+        await novel_service.delete_chapter(project_id, ch_num)
+
+    await session.commit()
+    return await _load_project_schema(novel_service, project_id, current_user.id)
+
+
+@router.post("/novels/{project_id}/chapters/outline", response_model=NovelProjectSchema)
+async def generate_chapters_outline(
+    project_id: str,
+    request: GenerateOutlineRequest,
+    session: AsyncSession = Depends(get_session),
+    current_user: UserInDB = Depends(get_current_user),
+) -> NovelProjectSchema:
+    novel_service = NovelService(session)
+    prompt_service = PromptService(session)
+    llm_service = LLMService(session)
+
+    project = await novel_service.ensure_project_owner(project_id, current_user.id)
+    
+    # 获取蓝图信息
+    project_schema = await novel_service._serialize_project(project)
+    blueprint_text = json.dumps(project_schema.blueprint.model_dump(), ensure_ascii=False, indent=2)
+    
+    # 获取已有的章节大纲
+    existing_outlines = [
+        f"第{o.chapter_number}章 - {o.title}: {o.summary}"
+        for o in sorted(project.outlines, key=lambda x: x.chapter_number)
+    ]
+    existing_outlines_text = "\n".join(existing_outlines) if existing_outlines else "暂无"
+
+    outline_prompt = await prompt_service.get_prompt("outline_generation")
+    if not outline_prompt:
+        raise HTTPException(status_code=500, detail="未配置大纲生成提示词")
+
+    prompt_input = f"""
+[世界蓝图]
+{blueprint_text}
+
+[已有章节大纲]
+{existing_outlines_text}
+
+[生成任务]
+请从第 {request.start_chapter} 章开始，续写接下来的 {request.num_chapters} 章的大纲。
+要求返回 JSON 格式，包含一个 chapters 数组，每个元素包含 chapter_number, title, summary。
+"""
+
+    response = await llm_service.get_llm_response(
+        system_prompt=outline_prompt,
+        conversation_history=[{"role": "user", "content": prompt_input}],
+        temperature=0.7,
+        user_id=current_user.id,
     )
-    await novel_service.delete_chapters(project_id, request.chapter_numbers)
+    
+    cleaned = remove_think_tags(response)
+    normalized = unwrap_markdown_json(cleaned)
+    try:
+        data = json.loads(normalized)
+        new_outlines = data.get("chapters", [])
+        for item in new_outlines:
+            await novel_service.update_or_create_outline(
+                project_id, 
+                item["chapter_number"], 
+                item["title"], 
+                item["summary"]
+            )
+        await session.commit()
+    except Exception as exc:
+        logger.exception("生成大纲解析失败: %s", exc)
+        raise HTTPException(status_code=500, detail=f"大纲生成失败: {str(exc)}")
 
-    # 删除章节时同步清理向量库，避免过时内容被检索
-    vector_store: Optional[VectorStoreService]
-    if not settings.vector_store_enabled:
-        vector_store = None
-    else:
-        try:
-            vector_store = VectorStoreService()
-        except RuntimeError as exc:
-            logger.warning("向量库初始化失败，跳过章节向量删除: %s", exc)
-            vector_store = None
-
-    if vector_store:
-        ingestion_service = ChapterIngestionService(llm_service=llm_service, vector_store=vector_store)
-        await ingestion_service.delete_chapters(project_id, request.chapter_numbers)
-        logger.info(
-            "项目 %s 已从向量库移除章节 %s",
-            project_id,
-            request.chapter_numbers,
-        )
-
-    return await novel_service.get_project_schema(project_id, current_user.id)
+    return await _load_project_schema(novel_service, project_id, current_user.id)
 
 
 @router.post("/novels/{project_id}/chapters/edit", response_model=NovelProjectSchema)
-async def edit_chapter(
+async def edit_chapter_content(
     project_id: str,
     request: EditChapterRequest,
     session: AsyncSession = Depends(get_session),
@@ -587,49 +577,41 @@ async def edit_chapter(
 ) -> NovelProjectSchema:
     novel_service = NovelService(session)
     llm_service = LLMService(session)
-
-    project = await novel_service.ensure_project_owner(project_id, current_user.id)
-    chapter = next((ch for ch in project.chapters if ch.chapter_number == request.chapter_number), None)
-    if not chapter or chapter.selected_version is None:
-        logger.warning("项目 %s 第 %s 章尚未生成或未选择版本，无法编辑", project_id, request.chapter_number)
-        raise HTTPException(status_code=404, detail="章节尚未生成或未选择版本")
-
-    chapter.selected_version.content = request.content
-    chapter.word_count = len(request.content)
-    logger.info("用户 %s 更新了项目 %s 第 %s 章内容", current_user.id, project_id, request.chapter_number)
-
-    if request.content.strip():
+    
+    await novel_service.ensure_project_owner(project_id, current_user.id)
+    chapter = await novel_service.get_or_create_chapter(project_id, request.chapter_number)
+    
+    # 更新内容
+    chapter.content = request.content
+    
+    # 重新生成摘要
+    try:
         summary = await llm_service.get_summary(
             request.content,
             temperature=0.15,
             user_id=current_user.id,
-            timeout=180.0,
         )
         chapter.real_summary = remove_think_tags(summary)
+    except Exception as e:
+        logger.warning(f"编辑章节后自动生成摘要失败: {e}")
+    
+    chapter.status = "successful"
     await session.commit()
-
-    vector_store: Optional[VectorStoreService]
-    if not settings.vector_store_enabled:
-        vector_store = None
-    else:
-        try:
-            vector_store = VectorStoreService()
-        except RuntimeError as exc:
-            logger.warning("向量库初始化失败，跳过章节向量更新: %s", exc)
-            vector_store = None
-
-    if vector_store and chapter.selected_version and chapter.selected_version.content:
-        ingestion_service = ChapterIngestionService(llm_service=llm_service, vector_store=vector_store)
-        outline = next((item for item in project.outlines if item.chapter_number == chapter.chapter_number), None)
-        chapter_title = outline.title if outline and outline.title else f"第{chapter.chapter_number}章"
-        await ingestion_service.ingest_chapter(
+    
+    # 异步触发向量化入库
+    try:
+        llm_service = LLMService(session)
+        ingest_service = ChapterIngestionService(llm_service=llm_service)
+        await ingest_service.ingest_chapter(
             project_id=project_id,
-            chapter_number=chapter.chapter_number,
-            title=chapter_title,
-            content=chapter.selected_version.content,
-            summary=chapter.real_summary,
-            user_id=current_user.id,
+            chapter_number=request.chapter_number,
+            title=chapter.title or f"第{request.chapter_number}章",
+            content=request.content,
+            summary=None
         )
-        logger.info("项目 %s 第 %s 章更新内容已同步至向量库", project_id, chapter.chapter_number)
-
-    return await novel_service.get_project_schema(project_id, current_user.id)
+        logger.info(f"章节 {request.chapter_number} 向量化入库成功")
+    except Exception as e:
+        logger.error(f"章节 {request.chapter_number} 向量化入库失败: {e}")
+        # 向量化失败不应阻止内容编辑，仅记录错误
+    
+    return await _load_project_schema(novel_service, project_id, current_user.id)

@@ -1,0 +1,9 @@
+AIDIR PATH=frontend/src/components/writing-desk|ROLE=写作台组件_写作界面组件|BOUND=不含详情展示_专注写作功能|ENTRY=NO_ENTRY|EXPOSE=ui|FIND=工作区:WDWorkspace.vue_侧边栏:WDSidebar.vue_头部:WDHeader.vue_子组件:workspace
+AILIST NAME=workspace|K=dir|P=工作区子组件_章节编辑子组件|E=-|A=-
+AILIST NAME=WDEditChapterModal.vue|K=file|P=编辑章节弹窗_章节信息编辑|E=component:WDEditChapterModal|A=章节编辑表单
+AILIST NAME=WDEvaluationDetailModal.vue|K=file|P=评审详情弹窗_章节评审展示|E=component:WDEvaluationDetailModal|A=评审结果展示
+AILIST NAME=WDGenerateOutlineModal.vue|K=file|P=生成大纲弹窗_大纲生成界面|E=component:WDGenerateOutlineModal|A=大纲生成表单
+AILIST NAME=WDHeader.vue|K=file|P=写作台头部_顶部导航栏|E=component:WDHeader|A=导航_操作按钮
+AILIST NAME=WDSidebar.vue|K=file|P=写作台侧边栏_章节目录|E=component:WDSidebar|A=章节列表_导航
+AILIST NAME=WDVersionDetailModal.vue|K=file|P=版本详情弹窗_版本信息展示|E=component:WDVersionDetailModal|A=版本对比_历史
+AILIST NAME=WDWorkspace.vue|K=file|P=写作台工作区_主编辑区域|E=component:WDWorkspace|A=章节编辑_生成

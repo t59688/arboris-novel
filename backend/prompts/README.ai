@@ -1,0 +1,4 @@
+AIDIR PATH=backend/prompts|ROLE=AI提示词模板_LLM调用的系统提示|BOUND=不含Python代码_不含业务逻辑|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=提示词文件:*.txt
+AILIST NAME=chapter_generation.txt|K=file|P=章节生成提示_章节内容生成模板|E=-|A=章节生成指令
+AILIST NAME=outline_generation.txt|K=file|P=大纲生成提示_故事大纲生成模板|E=-|A=大纲生成指令
+AILIST NAME=review_generation.txt|K=file|P=评审生成提示_章节评审模板|E=-|A=评审生成指令

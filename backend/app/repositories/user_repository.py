@@ -1,3 +1,4 @@
+# AIMETA P=用户仓库_用户数据访问|R=用户CRUD_认证查询|NR=不含业务逻辑|E=UserRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from datetime import date
 from typing import Iterable, Optional
 

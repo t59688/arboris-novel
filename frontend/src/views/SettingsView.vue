@@ -1,3 +1,4 @@
+<!-- AIMETA P=设置页_用户设置|R=用户设置表单|NR=不含管理员设置|E=route:/settings#component:SettingsView|X=ui|A=设置表单|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="min-h-screen p-4 relative">
     <div class="absolute top-4 left-4">

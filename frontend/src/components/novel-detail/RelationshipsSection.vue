@@ -1,3 +1,4 @@
+<!-- AIMETA P=关系区_角色关系展示|R=关系图谱|NR=不含编辑功能|E=component:RelationshipsSection|X=ui|A=关系组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-6">
     <div class="flex items-center justify-between">

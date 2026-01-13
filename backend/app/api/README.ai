@@ -1,0 +1,3 @@
+AIDIR PATH=backend/app/api|ROLE=API层_聚合所有路由模块|BOUND=不含业务逻辑实现_不含数据库操作_只负责路由注册|ENTRY=routers/__init__.py|EXPOSE=http|FIND=路由定义:routers/
+AILIST NAME=routers|K=dir|P=路由模块目录_包含所有API端点定义|E=-|A=-
+AILIST NAME=__init__.py|K=file|P=API包初始化_导出路由聚合|E=-|A=-

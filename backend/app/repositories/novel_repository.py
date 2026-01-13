@@ -1,3 +1,4 @@
+# AIMETA P=小说仓库_小说和章节数据访问|R=小说CRUD_章节CRUD|NR=不含业务逻辑|E=NovelRepository|X=internal|A=仓库类|D=sqlalchemy|S=db|RD=./README.ai
 from typing import Iterable, Optional
 
 from sqlalchemy import select

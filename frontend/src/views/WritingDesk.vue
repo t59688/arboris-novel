@@ -1,3 +1,4 @@
+<!-- AIMETA P=写作台_章节编辑主页面|R=写作界面_章节管理|NR=不含详情展示|E=route:/novel/:id#component:WritingDesk|X=ui|A=写作台|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <div class="h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
     <WDHeader
@@ -502,11 +503,15 @@ const saveChapterChanges = async (updatedChapter: ChapterOutline) => {
 
 const evaluateChapter = async () => {
   if (selectedChapterNumber.value !== null) {
+    // 保存原始状态，用于失败时恢复
+    let previousStatus: "not_generated" | "generating" | "evaluating" | "selecting" | "failed" | "evaluation_failed" | "waiting_for_confirm" | "successful" | undefined
+    
     try {
       // 在本地更新章节状态为evaluating以立即反映在UI上
       if (project.value?.chapters) {
         const chapter = project.value.chapters.find(ch => ch.chapter_number === selectedChapterNumber.value)
         if (chapter) {
+          previousStatus = chapter.generation_status // 保存原状态
           chapter.generation_status = 'evaluating'
         }
       }
@@ -517,11 +522,11 @@ const evaluateChapter = async () => {
     } catch (error) {
       console.error('评审章节失败:', error)
       
-      // 错误状态下恢复章节状态
+      // 错误状态下恢复章节状态为原始状态
       if (project.value?.chapters) {
         const chapter = project.value.chapters.find(ch => ch.chapter_number === selectedChapterNumber.value)
-        if (chapter) {
-          chapter.generation_status = 'successful' // 恢复为成功状态
+        if (chapter && previousStatus) {
+          chapter.generation_status = previousStatus // 恢复为原状态
         }
       }
       

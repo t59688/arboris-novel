@@ -1,3 +1,4 @@
+<!-- AIMETA P=小说管理_管理员小说列表管理|R=小说列表_删除_统计|NR=不含普通用户功能|E=component:NovelManagement|X=ui|A=管理组件|D=vue|S=dom,net|RD=./README.ai -->
 <template>
   <n-card class="novel-management-card" size="large" :bordered="false">
     <template #header>
@@ -108,8 +109,20 @@ const updateLayout = () => {
 
 const formatDate = (value: string | null | undefined) => {
   if (!value) return '未记录'
-  const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? '未记录' : date.toLocaleString()
+  try {
+    const date = new Date(value)
+    if (isNaN(date.getTime())) return '未记录'
+    
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    
+    return `${year}年${month}月${day}日 ${hours}:${minutes}`
+  } catch (error) {
+    return '未记录'
+  }
 }
 
 const formatProgress = (novel: Pick<AdminNovelSummary, 'completed_chapters' | 'total_chapters'>) => {

@@ -1,3 +1,4 @@
+// AIMETA P=提示组合函数_全局提示消息管理|R=showAlert_hideAlert|NR=不含UI组件|E=compose:useAlert|X=internal|A=useAlert函数|D=vue|S=dom|RD=./README.ai
 import { ref } from 'vue'
 
 type AlertType = 'success' | 'error' | 'info' | 'confirmation'

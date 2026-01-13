@@ -1,0 +1,10 @@
+AIDIR PATH=.|ROLE=AI小说创作平台根目录_提供前后端分离的小说创作辅助系统|BOUND=不含第三方依赖源码_不含用户数据_不含密钥|ENTRY=backend/app/main.py_frontend/src/main.ts|EXPOSE=http|FIND=后端API:backend/app/api_前端页面:frontend/src/views
+AILIST NAME=backend|K=dir|P=Python后端服务_FastAPI框架_提供RESTful_API|E=-|A=-
+AILIST NAME=frontend|K=dir|P=Vue3前端应用_提供用户界面和交互|E=-|A=-
+AILIST NAME=deploy|K=dir|P=部署配置文件_Docker和Nginx配置|E=-|A=-
+AILIST NAME=docs|K=dir|P=项目文档_架构设计和API说明|E=-|A=-
+AILIST NAME=README.md|K=file|P=项目说明文档_功能介绍和使用指南|E=-|A=-
+AILIST NAME=INTEGRATION_REPORT.md|K=file|P=集成报告_系统集成状态和测试结果|E=-|A=-
+AILIST NAME=integration_design.md|K=file|P=集成设计文档_模块集成方案|E=-|A=-
+AILIST NAME=.gitignore|K=file|P=Git忽略配置_排除临时文件和依赖|E=-|A=-
+AILIST NAME=.dockerignore|K=file|P=Docker忽略配置_排除构建无关文件|E=-|A=-

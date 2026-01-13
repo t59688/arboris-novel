@@ -1,3 +1,4 @@
+# AIMETA P=应用配置_环境变量加载和设置类|R=配置加载_环境变量|NR=不含业务逻辑|E=settings|X=internal|A=Settings类|D=pydantic|S=fs|RD=./README.ai
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional

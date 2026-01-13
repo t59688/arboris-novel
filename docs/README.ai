@@ -1,0 +1,3 @@
+AIDIR PATH=docs|ROLE=项目文档_架构设计和API说明|BOUND=不含源代码_仅文档|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=架构文档_API文档
+AILIST NAME=architecture.md|K=file|P=架构文档_系统架构设计说明|E=-|A=架构图_模块说明
+AILIST NAME=api.md|K=file|P=API文档_接口使用说明|E=-|A=接口列表_参数说明

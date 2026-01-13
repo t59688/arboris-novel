@@ -1,0 +1,3 @@
+AIDIR PATH=frontend/src/stores|ROLE=状态管理_Pinia_Store定义|BOUND=不含UI组件_仅状态逻辑|ENTRY=NO_ENTRY|EXPOSE=internal|FIND=认证:auth.ts_小说:novel.ts
+AILIST NAME=auth.ts|K=file|P=认证状态_用户登录状态管理|E=store:auth|A=token_user_login_logout
+AILIST NAME=novel.ts|K=file|P=小说状态_当前小说数据管理|E=store:novel|A=currentNovel_chapters_fetch

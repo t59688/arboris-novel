@@ -1,3 +1,4 @@
+<!-- AIMETA P=世界观区_世界设定展示|R=世界观信息|NR=不含编辑功能|E=component:WorldSettingSection|X=ui|A=世界观组件|D=vue|S=dom|RD=./README.ai -->
 <template>
   <div class="space-y-6">
     <div class="bg-white/95 rounded-2xl shadow-sm border border-slate-200 p-6">

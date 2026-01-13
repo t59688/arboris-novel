@@ -1,3 +1,4 @@
+# AIMETA P=小说服务_小说管理业务逻辑|R=小说CRUD_章节管理|NR=不含内容生成|E=NovelService|X=internal|A=服务类|D=sqlalchemy|S=db|RD=./README.ai
 from __future__ import annotations
 
 import json
@@ -75,6 +76,7 @@ def _clean_string(text: str, parse_json: bool = True) -> str:
 
 from fastapi import HTTPException, status
 from sqlalchemy import delete, func, select, update
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models import (
@@ -301,6 +303,9 @@ class NovelService:
                     chapter_number=outline.chapter_number,
                     title=outline.title,
                     summary=outline.summary,
+                    narrative_phase=outline.narrative_phase,
+                    foreshadowing=outline.foreshadowing,
+                    emotion_hook=outline.emotion_hook,
                 )
             )
 
@@ -360,13 +365,16 @@ class NovelService:
             await self.session.execute(delete(ChapterOutline).where(ChapterOutline.project_id == project_id))
             for outline in patch["chapter_outline"]:
                 self.session.add(
-                    ChapterOutline(
-                        project_id=project_id,
-                        chapter_number=outline.get("chapter_number"),
-                        title=outline.get("title", ""),
-                        summary=outline.get("summary"),
-                    )
+                ChapterOutline(
+                    project_id=project_id,
+                    chapter_number=outline.get("chapter_number"),
+                    title=outline.get("title", ""),
+                    summary=outline.get("summary"),
+                    narrative_phase=outline.get("narrative_phase"),
+                    foreshadowing=outline.get("foreshadowing"),
+                    emotion_hook=outline.get("emotion_hook"),
                 )
+            )
         await self.session.commit()
         await self._touch_project(project_id)
 
@@ -387,6 +395,7 @@ class NovelService:
     async def get_or_create_chapter(self, project_id: str, chapter_number: int) -> Chapter:
         stmt = (
             select(Chapter)
+            .options(selectinload(Chapter.selected_version))
             .where(
                 Chapter.project_id == project_id,
                 Chapter.chapter_number == chapter_number,
@@ -430,6 +439,11 @@ class NovelService:
         if not versions or version_index < 0 or version_index >= len(versions):
             raise HTTPException(status_code=400, detail="版本索引无效")
         selected = versions[version_index]
+        
+        # 校验内容是否为空
+        if not selected.content or len(selected.content.strip()) == 0:
+            raise HTTPException(status_code=400, detail="选中的版本内容为空，无法确认为最终版")
+        
         chapter.selected_version_id = selected.id
         chapter.status = ChapterGenerationStatus.SUCCESSFUL.value
         chapter.word_count = len(selected.content or "")
@@ -573,6 +587,9 @@ class NovelService:
                         chapter_number=outline.chapter_number,
                         title=outline.title,
                         summary=outline.summary or "",
+                        narrative_phase=outline.narrative_phase,
+                        foreshadowing=outline.foreshadowing,
+                        emotion_hook=outline.emotion_hook,
                     )
                     for outline in sorted(project.outlines, key=lambda o: o.chapter_number)
                 ],
@@ -670,6 +687,9 @@ class NovelService:
 
         title = outline.title if outline else f"第{chapter_number}章"
         summary = outline.summary if outline else ""
+        narrative_phase = outline.narrative_phase if outline else None
+        foreshadowing = outline.foreshadowing if outline else None
+        emotion_hook = outline.emotion_hook if outline else None
         real_summary = chapter.real_summary if chapter else None
         content = None
         versions: Optional[List[str]] = None
@@ -698,6 +718,9 @@ class NovelService:
             chapter_number=chapter_number,
             title=title,
             summary=summary,
+            narrative_phase=narrative_phase,
+            foreshadowing=foreshadowing,
+            emotion_hook=emotion_hook,
             real_summary=real_summary,
             content=content,
             versions=versions,

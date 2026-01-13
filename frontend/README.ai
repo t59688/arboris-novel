@@ -1,0 +1,16 @@
+AIDIR PATH=frontend|ROLE=Vue3前端应用_提供用户界面和交互|BOUND=不含后端代码_不含数据库操作|ENTRY=src/main.ts|EXPOSE=ui|FIND=页面:src/views_组件:src/components_路由:src/router_状态:src/stores
+AILIST NAME=src|K=dir|P=前端源代码目录_Vue组件和逻辑|E=-|A=-
+AILIST NAME=public|K=dir|P=静态资源目录_公共文件|E=-|A=-
+AILIST NAME=index.html|K=file|P=HTML入口_Vue应用挂载点|E=ENTRYPOINT|A=根HTML
+AILIST NAME=package.json|K=file|P=NPM配置_依赖和脚本定义|E=-|A=依赖清单_构建脚本
+AILIST NAME=package-lock.json|K=file|P=NPM锁定文件_依赖版本锁定|E=-|A=-
+AILIST NAME=vite.config.ts|K=file|P=Vite配置_构建和开发服务器配置|E=-|A=构建配置_代理配置
+AILIST NAME=tsconfig.json|K=file|P=TypeScript配置_编译选项|E=-|A=TS编译配置
+AILIST NAME=tsconfig.app.json|K=file|P=应用TS配置_应用编译选项|E=-|A=应用TS配置
+AILIST NAME=tsconfig.node.json|K=file|P=Node_TS配置_Node环境编译选项|E=-|A=Node_TS配置
+AILIST NAME=postcss.config.js|K=file|P=PostCSS配置_CSS处理配置|E=-|A=CSS后处理
+AILIST NAME=env.d.ts|K=file|P=环境类型声明_Vite环境变量类型|E=-|A=环境类型
+AILIST NAME=.gitignore|K=file|P=Git忽略配置_前端忽略规则|E=-|A=-
+AILIST NAME=.dockerignore|K=file|P=Docker忽略配置_前端构建忽略|E=-|A=-
+AILIST NAME=.gitattributes|K=file|P=Git属性配置_文件属性设置|E=-|A=-
+AILIST NAME=.prettierrc.json|K=file|P=Prettier配置_代码格式化规则|E=-|A=-

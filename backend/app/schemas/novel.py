@@ -1,3 +1,4 @@
+# AIMETA P=小说模式_小说和章节请求响应|R=小说结构_章节结构|NR=不含业务逻辑|E=NovelSchema_ChapterSchema|X=internal|A=Pydantic模式|D=pydantic|S=none|RD=./README.ai
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
@@ -51,6 +52,9 @@ class ChapterOutline(BaseModel):
     chapter_number: int
     title: str
     summary: str
+    narrative_phase: Optional[str] = None
+    foreshadowing: Optional[Dict[str, List[str]]] = None
+    emotion_hook: Optional[str] = None
 
 
 class Chapter(ChapterOutline):
@@ -148,6 +152,9 @@ class UpdateChapterOutlineRequest(BaseModel):
     chapter_number: int
     title: str
     summary: str
+    narrative_phase: Optional[str] = None
+    foreshadowing: Optional[Dict[str, List[str]]] = None
+    emotion_hook: Optional[str] = None
 
 
 class DeleteChapterRequest(BaseModel):
